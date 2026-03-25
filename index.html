@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Licensing Department · Dubai</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --blue-deep:   #0d2b5e;
+  --blue-mid:    #1a4494;
+  --blue-bright: #1e5fcb;
+  --blue-light:  #dbeafe;
+  --blue-pale:   #eff6ff;
+  --accent:      #2563eb;
+  --accent-soft: #3b82f6;
+  --white:       #ffffff;
+  --gray-50:     #f8fafc;
+  --gray-100:    #f1f5f9;
+  --gray-200:    #e2e8f0;
+  --gray-300:    #cbd5e1;
+  --gray-500:    #64748b;
+  --gray-700:    #334155;
+  --gray-900:    #0f172a;
+  --green:       #059669;
+  --green-soft:  #d1fae5;
+  --red:         #dc2626;
+  --red-soft:    #fee2e2;
+  --amber:       #d97706;
+  --amber-soft:  #fef3c7;
+  --shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:   0 4px 16px rgba(13,43,94,.10), 0 1px 4px rgba(13,43,94,.06);
+  --shadow-lg:   0 12px 40px rgba(13,43,94,.14), 0 4px 12px rgba(13,43,94,.08);
+  --radius:      14px;
+  --radius-sm:   8px;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'DM Sans', sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:var(--gray-100); }
+::-webkit-scrollbar-thumb { background:var(--gray-300); border-radius:99px; }
+::-webkit-scrollbar-thumb:hover { background:var(--blue-bright); }
+
+/* ═══ TOPBAR ═══ */
+.topbar {
+  position:sticky; top:0; z-index:200;
+  background:var(--white);
+  border-bottom:1px solid var(--gray-200);
+  padding:0 40px;
+  height:60px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow: var(--shadow-sm);
+}
+.topbar-brand {
+  display:flex; align-items:center; gap:12px;
+  cursor:pointer;
+}
+.brand-mark {
+  width:34px; height:34px;
+  background: linear-gradient(135deg, var(--blue-mid), var(--accent));
+  border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-family:'Syne',sans-serif; font-size:13px; font-weight:800;
+  letter-spacing:-0.5px;
+}
+.brand-name {
+  font-family:'Syne', sans-serif;
+  font-size:15px; font-weight:700;
+  color:var(--blue-deep);
+  letter-spacing:0.2px;
+}
+.brand-name span { color:var(--accent-soft); font-weight:600; }
+.topbar-right { display:flex; align-items:center; gap:8px; }
+.topbar-date {
+  font-size:12px; color:var(--gray-500);
+  padding:4px 12px;
+  background:var(--gray-100);
+  border-radius:99px;
+}
+.topbar-btn {
+  display:flex; align-items:center; gap:6px;
+  padding:7px 14px; border-radius:var(--radius-sm);
+  font-size:12px; font-weight:600; font-family:'DM Sans',sans-serif;
+  cursor:pointer; transition:all .18s; border:none;
+  letter-spacing:0.2px;
+}
+.btn-ghost { background:transparent; color:var(--gray-500); }
+.btn-ghost:hover { background:var(--gray-100); color:var(--gray-900); }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--blue-mid); }
+.btn-danger { background:transparent; color:var(--red); }
+.btn-danger:hover { background:var(--red-soft); }
+#fileInput { display:none; }
+
+/* ═══ PAGES ═══ */
+.page { display:none; }
+.page.active { display:block; }
+
+/* ═══ HOME PAGE ═══ */
+.home-hero {
+  background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 60%, var(--blue-bright) 100%);
+  padding:56px 40px 48px;
+  position:relative; overflow:hidden;
+}
+.home-hero::before {
+  content:'';
+  position:absolute; top:-60px; right:-60px;
+  width:320px; height:320px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.05);
+}
+.home-hero::after {
+  content:'';
+  position:absolute; bottom:-80px; left:30%;
+  width:200px; height:200px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.04);
+}
+.hero-label {
+  font-size:11px; font-weight:600; letter-spacing:2.5px;
+  text-transform:uppercase; color:rgba(255,255,255,0.55);
+  margin-bottom:10px;
+}
+.hero-title {
+  font-family:'Syne', sans-serif;
+  font-size:34px; font-weight:800;
+  color:#fff; line-height:1.15;
+  margin-bottom:8px;
+}
+.hero-sub {
+  font-size:14px; color:rgba(255,255,255,0.65);
+  font-weight:400; max-width:480px; line-height:1.6;
+}
+.hero-stats {
+  display:flex; gap:32px; margin-top:32px;
+}
+.hero-stat { }
+.hero-stat-val {
+  font-family:'Syne',sans-serif; font-size:26px; font-weight:700;
+  color:#fff; line-height:1;
+}
+.hero-stat-label {
+  font-size:11px; color:rgba(255,255,255,0.5);
+  margin-top:4px; text-transform:uppercase; letter-spacing:1px;
+}
+
+/* ═══ CARDS GRID ═══ */
+.home-cards {
+  padding:36px 40px 48px;
+}
+.section-label {
+  font-size:11px; font-weight:600; letter-spacing:2px;
+  text-transform:uppercase; color:var(--gray-500);
+  margin-bottom:20px;
+}
+.cards-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:18px;
+}
+.nav-card {
+  background:var(--white);
+  border:1.5px solid var(--gray-200);
+  border-radius:var(--radius);
+  padding:28px 26px;
+  cursor:pointer;
+  transition:all .22s cubic-bezier(.4,0,.2,1);
+  position:relative; overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.nav-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--card-color, var(--accent));
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .22s cubic-bezier(.4,0,.2,1);
+}
+.nav-card:hover {
+  border-color:var(--card-color, var(--accent));
+  box-shadow:var(--shadow-lg);
+  transform:translateY(-3px);
+}
+.nav-card:hover::before { transform:scaleX(1); }
+.card-icon {
+  width:48px; height:48px; border-radius:12px;
+  background:var(--card-bg, var(--blue-pale));
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; margin-bottom:16px;
+  transition:transform .22s;
+}
+.nav-card:hover .card-icon { transform:scale(1.08); }
+.card-title {
+  font-family:'Syne',sans-serif; font-size:15px; font-weight:700;
+  color:var(--gray-900); margin-bottom:6px; line-height:1.3;
+}
+.card-desc {
+  font-size:12px; color:var(--gray-500); line-height:1.6;
+}
+.card-meta {
+  margin-top:18px; padding-top:14px;
+  border-top:1px solid var(--gray-100);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.card-count {
+  font-family:'Syne',sans-serif; font-size:18px; font-weight:700;
+  color:var(--card-color, var(--accent));
+}
+.card-count-label { font-size:10px; color:var(--gray-500); margin-top:1px; }
+.card-arrow {
+  width:28px; height:28px; border-radius:50%;
+  background:var(--card-bg, var(--blue-pale));
+  display:flex; align-items:center; justify-content:center;
+  color:var(--card-color, var(--accent)); font-size:14px;
+  transition:all .2s;
+}
+.nav-card:hover .card-arrow {
+  background:var(--card-color, var(--accent)); color:#fff;
+}
+
+/* ═══ DASHBOARD PAGE ═══ */
+.dash-header {
+  background:var(--white);
+  border-bottom:1px solid var(--gray-200);
+  padding:20px 40px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.dash-breadcrumb {
+  display:flex; align-items:center; gap:8px;
+  font-size:12px; color:var(--gray-500);
+}
+.breadcrumb-home {
+  cursor:pointer; color:var(--accent); font-weight:500;
+  transition:color .15s;
+}
+.breadcrumb-home:hover { color:var(--blue-deep); }
+.breadcrumb-sep { color:var(--gray-300); }
+.breadcrumb-current { color:var(--gray-900); font-weight:600; }
+.dash-title-row {
+  display:flex; align-items:center; gap:14px;
+}
+.dash-icon {
+  width:40px; height:40px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+}
+.dash-title {
+  font-family:'Syne',sans-serif; font-size:20px; font-weight:700;
+  color:var(--blue-deep);
+}
+.dash-actions { display:flex; gap:8px; }
+
+/* ═══ DASH BODY ═══ */
+.dash-body { padding:28px 40px 48px; }
+
+/* ═══ KPI ROW ═══ */
+.kpi-row {
+  display:grid; gap:14px;
+  margin-bottom:24px;
+}
+.kpi-row.c4 { grid-template-columns:repeat(4,1fr); }
+.kpi-row.c5 { grid-template-columns:repeat(5,1fr); }
+.kpi-row.c3 { grid-template-columns:repeat(3,1fr); }
+
+.kpi {
+  background:var(--white);
+  border:1.5px solid var(--gray-200);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  box-shadow:var(--shadow-sm);
+  position:relative; overflow:hidden;
+  transition:box-shadow .18s, border-color .18s;
+}
+.kpi:hover { box-shadow:var(--shadow-md); border-color:var(--gray-300); }
+.kpi-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px; }
+.kpi-label {
+  font-size:11px; font-weight:600; text-transform:uppercase;
+  letter-spacing:1.2px; color:var(--gray-500);
+}
+.kpi-emoji { font-size:20px; opacity:.7; }
+.kpi-val {
+  font-family:'Syne',sans-serif; font-size:32px; font-weight:700;
+  color:var(--kpi-color, var(--blue-deep)); line-height:1;
+}
+.kpi-sub { font-size:11px; color:var(--gray-500); margin-top:5px; }
+.kpi-bar {
+  position:absolute; bottom:0; left:0; right:0; height:3px;
+  background:var(--kpi-color, var(--accent)); opacity:.25;
+}
+
+/* ═══ CHART CARDS ═══ */
+.charts-row {
+  display:grid; gap:16px; margin-bottom:16px;
+}
+.charts-row.c2 { grid-template-columns:1fr 1fr; }
+.charts-row.c3 { grid-template-columns:1fr 1fr 1fr; }
+.charts-row.c21 { grid-template-columns:2fr 1fr; }
+.charts-row.c12 { grid-template-columns:1fr 2fr; }
+
+.chart-card {
+  background:var(--white);
+  border:1.5px solid var(--gray-200);
+  border-radius:var(--radius);
+  padding:22px 22px 18px;
+  box-shadow:var(--shadow-sm);
+  transition:box-shadow .18s;
+}
+.chart-card:hover { box-shadow:var(--shadow-md); }
+.chart-head {
+  font-family:'Syne',sans-serif; font-size:13px; font-weight:700;
+  color:var(--gray-700); margin-bottom:16px;
+  display:flex; align-items:center; gap:8px;
+}
+.chart-head::before {
+  content:''; width:3px; height:14px;
+  background:var(--accent); border-radius:99px; flex-shrink:0;
+}
+.chart-wrap { position:relative; }
+.chart-wrap.h200 { height:200px; }
+.chart-wrap.h240 { height:240px; }
+.chart-wrap.h280 { height:280px; }
+
+/* ═══ DATA TABLE CARD ═══ */
+.table-card {
+  background:var(--white);
+  border:1.5px solid var(--gray-200);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  overflow:hidden; margin-top:16px;
+}
+.table-toolbar {
+  padding:16px 20px;
+  border-bottom:1px solid var(--gray-100);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; flex-wrap:wrap;
+}
+.table-toolbar-left { display:flex; align-items:center; gap:12px; }
+.table-toolbar-right { display:flex; align-items:center; gap:8px; }
+.table-title-text {
+  font-family:'Syne',sans-serif; font-size:14px; font-weight:700;
+  color:var(--gray-900);
+}
+.row-count {
+  font-size:11px; color:var(--gray-500);
+  background:var(--gray-100); padding:3px 10px; border-radius:99px;
+}
+.search-box {
+  display:flex; align-items:center; gap:6px;
+  background:var(--gray-100); border:1.5px solid transparent;
+  border-radius:var(--radius-sm); padding:6px 12px;
+  transition:border-color .15s;
+}
+.search-box:focus-within { border-color:var(--accent); background:var(--white); }
+.search-box input {
+  border:none; background:transparent; outline:none;
+  font-size:12px; font-family:'DM Sans',sans-serif; color:var(--gray-900);
+  width:180px;
+}
+.search-box input::placeholder { color:var(--gray-500); }
+.tbl-scroll { overflow-x:auto; max-height:400px; overflow-y:auto; }
+table { width:100%; border-collapse:collapse; font-size:12.5px; }
+thead th {
+  position:sticky; top:0; z-index:2;
+  background:var(--gray-50); padding:10px 14px;
+  text-align:left; font-size:10.5px; font-weight:600;
+  text-transform:uppercase; letter-spacing:0.8px; color:var(--gray-500);
+  border-bottom:1.5px solid var(--gray-200); white-space:nowrap;
+  cursor:pointer; user-select:none;
+}
+thead th:hover { color:var(--accent); }
+tbody tr { border-bottom:1px solid var(--gray-100); transition:background .12s; }
+tbody tr:hover { background:var(--blue-pale); }
+tbody td { padding:9px 14px; color:var(--gray-700); white-space:nowrap; }
+tbody td.editable { cursor:pointer; }
+tbody td.editable:hover { background:var(--blue-light); border-radius:4px; }
+tbody td[contenteditable="true"] {
+  outline:2px solid var(--accent); border-radius:4px;
+  background:var(--white); padding:6px 10px;
+}
+.add-row-btn {
+  width:100%; padding:10px; text-align:center;
+  font-size:12px; color:var(--accent); font-weight:600;
+  border:none; background:var(--gray-50); cursor:pointer;
+  border-top:1.5px dashed var(--gray-200);
+  transition:background .15s; font-family:'DM Sans',sans-serif;
+}
+.add-row-btn:hover { background:var(--blue-pale); }
+
+/* ═══ BADGES ═══ */
+.badge {
+  display:inline-block; padding:2px 9px; border-radius:99px;
+  font-size:10.5px; font-weight:600; letter-spacing:0.3px;
+  white-space:nowrap;
+}
+.b-green  { background:var(--green-soft);  color:#065f46; }
+.b-red    { background:var(--red-soft);    color:#991b1b; }
+.b-amber  { background:var(--amber-soft);  color:#92400e; }
+.b-blue   { background:var(--blue-light);  color:var(--blue-deep); }
+.b-gray   { background:var(--gray-100);    color:var(--gray-700); }
+
+/* ═══ SECTION HEADER ═══ */
+.section-head {
+  font-family:'Syne',sans-serif; font-size:11px; font-weight:700;
+  text-transform:uppercase; letter-spacing:2px; color:var(--gray-500);
+  margin:28px 0 14px;
+  display:flex; align-items:center; gap:10px;
+}
+.section-head::after {
+  content:''; flex:1; height:1.5px; background:var(--gray-200);
+}
+
+/* ═══ FILTER BAR ═══ */
+.filter-bar {
+  background:var(--white);
+  border:1.5px solid var(--gray-200);
+  border-radius:var(--radius);
+  padding:14px 20px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  margin-bottom:20px; box-shadow:var(--shadow-sm);
+}
+.filter-bar label {
+  font-size:11px; font-weight:600; color:var(--gray-500);
+  text-transform:uppercase; letter-spacing:1px;
+}
+.filter-sel {
+  background:var(--gray-50); border:1.5px solid var(--gray-200);
+  color:var(--gray-900); padding:6px 12px; border-radius:var(--radius-sm);
+  font-size:12px; font-family:'DM Sans',sans-serif; outline:none;
+  cursor:pointer; transition:border-color .15s;
+}
+.filter-sel:hover,.filter-sel:focus { border-color:var(--accent); }
+.filter-sel option { background:var(--white); }
+.filter-reset {
+  background:transparent; border:1.5px solid var(--gray-200);
+  color:var(--gray-500); padding:6px 12px; border-radius:var(--radius-sm);
+  font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif;
+  transition:all .15s; font-weight:600;
+}
+.filter-reset:hover { border-color:var(--red); color:var(--red); }
+
+/* ═══ TOAST ═══ */
+.toast {
+  position:fixed; bottom:28px; right:28px; z-index:999;
+  background:var(--blue-deep); color:#fff;
+  padding:12px 20px; border-radius:var(--radius-sm);
+  font-size:13px; font-weight:500;
+  box-shadow:var(--shadow-lg);
+  transform:translateY(80px); opacity:0;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  display:flex; align-items:center; gap:8px;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+
+/* ═══ MODAL (Settings) ═══ */
+.modal-overlay {
+  display:none; position:fixed; inset:0; z-index:500;
+  background:rgba(13,43,94,.35); backdrop-filter:blur(4px);
+  align-items:center; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background:var(--white); border-radius:var(--radius);
+  padding:32px; width:460px; max-width:90vw;
+  box-shadow:var(--shadow-lg);
+  animation:modalIn .2s cubic-bezier(.4,0,.2,1);
+}
+@keyframes modalIn { from{transform:scale(.95);opacity:0} to{transform:scale(1);opacity:1} }
+.modal-title {
+  font-family:'Syne',sans-serif; font-size:18px; font-weight:700;
+  color:var(--blue-deep); margin-bottom:20px;
+}
+.modal-close {
+  float:right; background:none; border:none; font-size:18px;
+  cursor:pointer; color:var(--gray-500); line-height:1;
+  transition:color .15s;
+}
+.modal-close:hover { color:var(--gray-900); }
+.setting-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 0; border-bottom:1px solid var(--gray-100);
+  font-size:13px; color:var(--gray-700);
+}
+.setting-row:last-child { border-bottom:none; }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1100px) {
+  .cards-grid { grid-template-columns:repeat(2,1fr); }
+  .kpi-row.c4,.kpi-row.c5 { grid-template-columns:repeat(2,1fr); }
+  .charts-row.c3,.charts-row.c21,.charts-row.c12,.charts-row.c2 { grid-template-columns:1fr; }
+}
+@media(max-width:680px) {
+  .topbar,.home-hero,.home-cards,.dash-header,.dash-body { padding-left:20px; padding-right:20px; }
+  .cards-grid { grid-template-columns:1fr; }
+  .hero-stats { flex-wrap:wrap; gap:18px; }
+}
+
+/* ═══ PAGE TRANSITION ═══ */
+.page.active { animation: fadeIn .25s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TOPBAR ══════════════ -->
+<header class="topbar">
+  <div class="topbar-brand" onclick="goHome()">
+    <div class="brand-mark">LD</div>
+    <div class="brand-name">Licensing <span>Department</span></div>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-date" id="topDate"></div>
+    <input type="file" id="fileInput" accept=".csv" multiple/>
+    <button class="topbar-btn btn-ghost" onclick="openSettings()">⚙ Settings</button>
+    <button class="topbar-btn btn-primary" onclick="document.getElementById('fileInput').click()">
+      ↑ Import CSV
+    </button>
+    <button class="topbar-btn btn-danger" onclick="confirmLogout()">↪ Logout</button>
+  </div>
+</header>
+
+<!-- ══════════════ HOME PAGE ══════════════ -->
+<div class="page active" id="page-home">
+  <div class="home-hero">
+    <div class="hero-label">Licensing Department · Dubai Roads & Transport Authority</div>
+    <div class="hero-title">Operations Dashboard</div>
+    <div class="hero-sub">Manage driver training records, accident data, and recruitment across all depots in one place.</div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="home-stat-1">100,579</div>
+        <div class="hero-stat-label">Training Records</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="home-stat-2">2,510</div>
+        <div class="hero-stat-label">Bus Accidents</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="home-stat-3">546</div>
+        <div class="hero-stat-label">Taxi Accidents</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">8</div>
+        <div class="hero-stat-label">Active Depots</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-cards">
+    <div class="section-label">Select a module to open its dashboard</div>
+    <div class="cards-grid">
+
+      <div class="nav-card" style="--card-color:#1e5fcb;--card-bg:#dbeafe;" onclick="openDash('inservice')">
+        <div class="card-icon">🚌</div>
+        <div class="card-title">Public Bus In-Service &amp; School Bus</div>
+        <div class="card-desc">Driver training records, attendance tracking, depot performance, and course breakdown.</div>
+        <div class="card-meta">
+          <div>
+            <div class="card-count" id="card-ct-1">100,579</div>
+            <div class="card-count-label">Training records</div>
+          </div>
+          <div class="card-arrow">→</div>
+        </div>
+      </div>
+
+      <div class="nav-card" style="--card-color:#059669;--card-bg:#d1fae5;" onclick="openDash('preservice')">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Public Bus Pre-Service</div>
+        <div class="card-desc">Pre-service driver onboarding, certification status and route familiarisation records.</div>
+        <div class="card-meta">
+          <div>
+            <div class="card-count" style="color:#059669">6,137</div>
+            <div class="card-count-label">Familiarisation records</div>
+          </div>
+          <div class="card-arrow" style="background:#d1fae5;color:#059669">→</div>
+        </div>
+      </div>
+
+      <div class="nav-card" style="--card-color:#d97706;--card-bg:#fef3c7;" onclick="openDash('taxi')">
+        <div class="card-icon">🚕</div>
+        <div class="card-title">Taxi &amp; Limousine Accident</div>
+        <div class="card-desc">Accident records 2023–2025, severity analysis, primary causes, and driver conviction data.</div>
+        <div class="card-meta">
+          <div>
+            <div class="card-count" style="color:#d97706" id="card-ct-3">546</div>
+            <div class="card-count-label">Accident records</div>
+          </div>
+          <div class="card-arrow" style="background:#fef3c7;color:#d97706">→</div>
+        </div>
+      </div>
+
+      <div class="nav-card" style="--card-color:#dc2626;--card-bg:#fee2e2;" onclick="openDash('busacc')">
+        <div class="card-icon">⚠️</div>
+        <div class="card-title">Public Bus Accident</div>
+        <div class="card-desc">Bus accident analysis by depot, preventability, driver fault status, and training compliance.</div>
+        <div class="card-meta">
+          <div>
+            <div class="card-count" style="color:#dc2626" id="card-ct-4">2,510</div>
+            <div class="card-count-label">Accident records</div>
+          </div>
+          <div class="card-arrow" style="background:#fee2e2;color:#dc2626">→</div>
+        </div>
+      </div>
+
+      <div class="nav-card" style="--card-color:#7c3aed;--card-bg:#ede9fe;" onclick="openDash('recruitment')">
+        <div class="card-icon">👥</div>
+        <div class="card-title">Public Bus Recruitment</div>
+        <div class="card-desc">Driver recruitment pipeline, nationality breakdown, depot allocation, and hiring trends.</div>
+        <div class="card-meta">
+          <div>
+            <div class="card-count" style="color:#7c3aed">40+</div>
+            <div class="card-count-label">Nationalities</div>
+          </div>
+          <div class="card-arrow" style="background:#ede9fe;color:#7c3aed">→</div>
+        </div>
+      </div>
+
+      <div class="nav-card" style="--card-color:#0891b2;--card-bg:#cffafe;" onclick="openDash('custom')">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Custom View</div>
+        <div class="card-desc">Import any CSV file and instantly visualise your data with auto-generated charts and a full table.</div>
+        <div class="card-meta">
+          <div>
+            <div class="card-count" style="color:#0891b2">Import</div>
+            <div class="card-count-label">Any CSV dataset</div>
+          </div>
+          <div class="card-arrow" style="background:#cffafe;color:#0891b2">→</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD: IN-SERVICE ══════════════ -->
+<div class="page" id="page-inservice">
+  <div class="dash-header">
+    <div>
+      <div class="dash-breadcrumb">
+        <span class="breadcrumb-home" onclick="goHome()">Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Public Bus In-Service &amp; School Bus</span>
+      </div>
+      <div class="dash-title-row" style="margin-top:6px">
+        <div class="dash-icon" style="background:#dbeafe">🚌</div>
+        <div class="dash-title">Training Dashboard</div>
+      </div>
+    </div>
+    <div class="dash-actions">
+      <button class="topbar-btn btn-ghost" onclick="exportCSV('is')">↓ Export CSV</button>
+      <button class="topbar-btn btn-primary" onclick="triggerImport('is')">↑ Import CSV</button>
+    </div>
+  </div>
+  <div class="dash-body">
+
+    <div class="filter-bar">
+      <label>Filters:</label>
+      <select class="filter-sel" id="is-f-year" onchange="renderIS()">
+        <option value="">All Years</option>
+        <option>2023</option><option>2024</option><option>2025</option><option>2026</option>
+      </select>
+      <select class="filter-sel" id="is-f-depot" onchange="renderIS()">
+        <option value="">All Depots</option>
+      </select>
+      <select class="filter-sel" id="is-f-type" onchange="renderIS()">
+        <option value="">All Training Types</option>
+      </select>
+      <select class="filter-sel" id="is-f-att" onchange="renderIS()">
+        <option value="">All Attendance</option>
+        <option>Present</option><option>Absent</option>
+      </select>
+      <button class="filter-reset" onclick="resetFilters('is')">✕ Reset</button>
+    </div>
+
+    <div class="kpi-row c4" id="is-kpis">
+      <div class="kpi" style="--kpi-color:var(--accent)">
+        <div class="kpi-top"><div class="kpi-label">Total Records</div><div class="kpi-emoji">📊</div></div>
+        <div class="kpi-val" id="is-k1">100,579</div>
+        <div class="kpi-sub">All depots combined</div>
+        <div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--green)">
+        <div class="kpi-top"><div class="kpi-label">Attendance Rate</div><div class="kpi-emoji">✅</div></div>
+        <div class="kpi-val" id="is-k2">97.1%</div>
+        <div class="kpi-sub" id="is-k2s">97,682 present</div>
+        <div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--red)">
+        <div class="kpi-top"><div class="kpi-label">Absent</div><div class="kpi-emoji">❌</div></div>
+        <div class="kpi-val" id="is-k3">2,897</div>
+        <div class="kpi-sub">Missed sessions</div>
+        <div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--amber)">
+        <div class="kpi-top"><div class="kpi-label">Active Depots</div><div class="kpi-emoji">🏢</div></div>
+        <div class="kpi-val" id="is-k4">8</div>
+        <div class="kpi-sub">Including School bus</div>
+        <div class="kpi-bar"></div>
+      </div>
+    </div>
+
+    <div class="charts-row c21">
+      <div class="chart-card">
+        <div class="chart-head">Monthly Training Volume</div>
+        <div class="chart-wrap h240"><canvas id="is-c1"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Training Type Split</div>
+        <div class="chart-wrap h240"><canvas id="is-c2"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-row c3">
+      <div class="chart-card">
+        <div class="chart-head">By Depot</div>
+        <div class="chart-wrap h200"><canvas id="is-c3"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Attendance Split</div>
+        <div class="chart-wrap h200"><canvas id="is-c4"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Top Nationalities</div>
+        <div class="chart-wrap h200"><canvas id="is-c5"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-head">Training Records Table</div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span class="table-title-text">All Records</span>
+          <span class="row-count" id="is-row-count">100,579 rows</span>
+        </div>
+        <div class="table-toolbar-right">
+          <div class="search-box">
+            🔍 <input type="text" placeholder="Search name, depot, course…" id="is-search" oninput="filterTable('is')"/>
+          </div>
+          <button class="topbar-btn btn-ghost" onclick="addRow('is')">+ Add Row</button>
+          <button class="topbar-btn btn-primary" onclick="exportCSV('is')">↓ Export</button>
+        </div>
+      </div>
+      <div class="tbl-scroll">
+        <table id="is-table">
+          <thead><tr>
+            <th onclick="sortTable('is',0)">#</th>
+            <th onclick="sortTable('is',1)">Training Date</th>
+            <th onclick="sortTable('is',2)">Staff ID</th>
+            <th onclick="sortTable('is',3)">Driver Name</th>
+            <th onclick="sortTable('is',4)">Nationality</th>
+            <th onclick="sortTable('is',5)">Depot</th>
+            <th onclick="sortTable('is',6)">Type</th>
+            <th onclick="sortTable('is',7)">Course Name</th>
+            <th onclick="sortTable('is',8)">Duration</th>
+            <th onclick="sortTable('is',9)">Trainer</th>
+            <th onclick="sortTable('is',10)">Attendance</th>
+            <th>Action</th>
+          </tr></thead>
+          <tbody id="is-tbody"></tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addRow('is')">+ Add New Row</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD: TAXI ══════════════ -->
+<div class="page" id="page-taxi">
+  <div class="dash-header">
+    <div>
+      <div class="dash-breadcrumb">
+        <span class="breadcrumb-home" onclick="goHome()">Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Taxi &amp; Limousine Accident</span>
+      </div>
+      <div class="dash-title-row" style="margin-top:6px">
+        <div class="dash-icon" style="background:#fef3c7">🚕</div>
+        <div class="dash-title">Taxi Accident Dashboard 2023–2025</div>
+      </div>
+    </div>
+    <div class="dash-actions">
+      <button class="topbar-btn btn-ghost" onclick="exportCSV('tx')">↓ Export CSV</button>
+      <button class="topbar-btn btn-primary" onclick="triggerImport('tx')">↑ Import CSV</button>
+    </div>
+  </div>
+  <div class="dash-body">
+
+    <div class="filter-bar">
+      <label>Filters:</label>
+      <select class="filter-sel" id="tx-f-year" onchange="renderTX()">
+        <option value="">All Years</option>
+        <option>2023</option><option>2024</option><option>2025</option>
+      </select>
+      <select class="filter-sel" id="tx-f-sev" onchange="renderTX()">
+        <option value="">All Severities</option>
+        <option>Non Injury Case</option><option>Slight</option>
+        <option>Medium</option><option>Serious</option><option>*Fatal *</option>
+      </select>
+      <select class="filter-sel" id="tx-f-nat" onchange="renderTX()">
+        <option value="">All Nationalities</option>
+      </select>
+      <button class="filter-reset" onclick="resetFilters('tx')">✕ Reset</button>
+    </div>
+
+    <div class="kpi-row c5">
+      <div class="kpi" style="--kpi-color:var(--accent)">
+        <div class="kpi-top"><div class="kpi-label">Total</div><div class="kpi-emoji">🚕</div></div>
+        <div class="kpi-val" id="tx-k1">546</div><div class="kpi-sub">All accidents</div><div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:#b91c1c">
+        <div class="kpi-top"><div class="kpi-label">Fatal</div><div class="kpi-emoji">⛔</div></div>
+        <div class="kpi-val" id="tx-k2" style="color:#b91c1c">12</div><div class="kpi-sub">Fatal cases</div><div class="kpi-bar" style="background:#b91c1c"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--red)">
+        <div class="kpi-top"><div class="kpi-label">Serious</div><div class="kpi-emoji">🔴</div></div>
+        <div class="kpi-val" id="tx-k3">23</div><div class="kpi-sub">Serious injury</div><div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--amber)">
+        <div class="kpi-top"><div class="kpi-label">Slight/Medium</div><div class="kpi-emoji">🟡</div></div>
+        <div class="kpi-val" id="tx-k4">326</div><div class="kpi-sub">Minor cases</div><div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--green)">
+        <div class="kpi-top"><div class="kpi-label">Non-Injury</div><div class="kpi-emoji">🟢</div></div>
+        <div class="kpi-val" id="tx-k5">185</div><div class="kpi-sub">Property damage only</div><div class="kpi-bar"></div>
+      </div>
+    </div>
+
+    <div class="charts-row c21">
+      <div class="chart-card">
+        <div class="chart-head">Monthly Trend — 2023 vs 2024 vs 2025</div>
+        <div class="chart-wrap h280"><canvas id="tx-c1"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Severity Breakdown</div>
+        <div class="chart-wrap h280"><canvas id="tx-c2"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-row c3">
+      <div class="chart-card">
+        <div class="chart-head">Top Primary Causes</div>
+        <div class="chart-wrap h200"><canvas id="tx-c3"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Collision Type</div>
+        <div class="chart-wrap h200"><canvas id="tx-c4"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Driver Nationality</div>
+        <div class="chart-wrap h200"><canvas id="tx-c5"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-head">Accident Records Table</div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span class="table-title-text">Taxi Accidents</span>
+          <span class="row-count" id="tx-row-count">546 rows</span>
+        </div>
+        <div class="table-toolbar-right">
+          <div class="search-box">🔍 <input type="text" placeholder="Search…" id="tx-search" oninput="filterTable('tx')"/></div>
+          <button class="topbar-btn btn-ghost" onclick="addRow('tx')">+ Add Row</button>
+          <button class="topbar-btn btn-primary" onclick="exportCSV('tx')">↓ Export</button>
+        </div>
+      </div>
+      <div class="tbl-scroll">
+        <table id="tx-table">
+          <thead><tr>
+            <th>#</th><th>Date</th><th>Time</th><th>Severity</th>
+            <th>Primary Cause</th><th>Collision Type</th><th>Location</th>
+            <th>Driver Age</th><th>Nationality</th><th>Experience</th><th>Convicted</th><th>Action</th>
+          </tr></thead>
+          <tbody id="tx-tbody"></tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addRow('tx')">+ Add New Row</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD: BUS ACCIDENT ══════════════ -->
+<div class="page" id="page-busacc">
+  <div class="dash-header">
+    <div>
+      <div class="dash-breadcrumb">
+        <span class="breadcrumb-home" onclick="goHome()">Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Public Bus Accident</span>
+      </div>
+      <div class="dash-title-row" style="margin-top:6px">
+        <div class="dash-icon" style="background:#fee2e2">⚠️</div>
+        <div class="dash-title">Bus Accident Dashboard</div>
+      </div>
+    </div>
+    <div class="dash-actions">
+      <button class="topbar-btn btn-ghost" onclick="exportCSV('ba')">↓ Export CSV</button>
+      <button class="topbar-btn btn-primary" onclick="triggerImport('ba')">↑ Import CSV</button>
+    </div>
+  </div>
+  <div class="dash-body">
+
+    <div class="filter-bar">
+      <label>Filters:</label>
+      <select class="filter-sel" id="ba-f-depot" onchange="renderBA()">
+        <option value="">All Depots</option>
+      </select>
+      <select class="filter-sel" id="ba-f-cat" onchange="renderBA()">
+        <option value="">All Categories</option>
+        <option>Minor</option><option>Moderate</option><option>Major</option>
+      </select>
+      <select class="filter-sel" id="ba-f-prev" onchange="renderBA()">
+        <option value="">Preventable — All</option>
+        <option>Yes</option><option>No</option>
+      </select>
+      <button class="filter-reset" onclick="resetFilters('ba')">✕ Reset</button>
+    </div>
+
+    <div class="kpi-row c4">
+      <div class="kpi" style="--kpi-color:var(--accent)">
+        <div class="kpi-top"><div class="kpi-label">Total Accidents</div><div class="kpi-emoji">🚌</div></div>
+        <div class="kpi-val" id="ba-k1">2,510</div><div class="kpi-sub">All depots</div><div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--red)">
+        <div class="kpi-top"><div class="kpi-label">Preventable</div><div class="kpi-emoji">⚠️</div></div>
+        <div class="kpi-val" id="ba-k2">875</div><div class="kpi-sub" id="ba-k2s">34.9% of total</div><div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--amber)">
+        <div class="kpi-top"><div class="kpi-label">Driver at Fault</div><div class="kpi-emoji">🚦</div></div>
+        <div class="kpi-val" id="ba-k3">536</div><div class="kpi-sub">Fault confirmed</div><div class="kpi-bar"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:var(--green)">
+        <div class="kpi-top"><div class="kpi-label">Training Done</div><div class="kpi-emoji">📚</div></div>
+        <div class="kpi-val" id="ba-k4">512</div><div class="kpi-sub">Post-accident training</div><div class="kpi-bar"></div>
+      </div>
+    </div>
+
+    <div class="charts-row c21">
+      <div class="chart-card">
+        <div class="chart-head">Monthly Accident Trend</div>
+        <div class="chart-wrap h240"><canvas id="ba-c1"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Accident Category</div>
+        <div class="chart-wrap h240"><canvas id="ba-c2"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-row c3">
+      <div class="chart-card">
+        <div class="chart-head">By Depot</div>
+        <div class="chart-wrap h200"><canvas id="ba-c3"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Preventable vs Not</div>
+        <div class="chart-wrap h200"><canvas id="ba-c4"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Bus Type Involved</div>
+        <div class="chart-wrap h200"><canvas id="ba-c5"></canvas></div>
+      </div>
+    </div>
+
+    <div class="section-head">Accident Records Table</div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span class="table-title-text">Bus Accidents</span>
+          <span class="row-count" id="ba-row-count">2,510 rows</span>
+        </div>
+        <div class="table-toolbar-right">
+          <div class="search-box">🔍 <input type="text" placeholder="Search…" id="ba-search" oninput="filterTable('ba')"/></div>
+          <button class="topbar-btn btn-ghost" onclick="addRow('ba')">+ Add Row</button>
+          <button class="topbar-btn btn-primary" onclick="exportCSV('ba')">↓ Export</button>
+        </div>
+      </div>
+      <div class="tbl-scroll">
+        <table id="ba-table">
+          <thead><tr>
+            <th>#</th><th>Accident Date</th><th>Driver Name</th><th>Nationality</th>
+            <th>Depot</th><th>Category</th><th>Bus Type</th><th>Route</th>
+            <th>Preventable</th><th>Status</th><th>Training</th><th>Action</th>
+          </tr></thead>
+          <tbody id="ba-tbody"></tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addRow('ba')">+ Add New Row</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD: PRE-SERVICE ══════════════ -->
+<div class="page" id="page-preservice">
+  <div class="dash-header">
+    <div>
+      <div class="dash-breadcrumb">
+        <span class="breadcrumb-home" onclick="goHome()">Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Public Bus Pre-Service</span>
+      </div>
+      <div class="dash-title-row" style="margin-top:6px">
+        <div class="dash-icon" style="background:#d1fae5">📋</div>
+        <div class="dash-title">Pre-Service Dashboard</div>
+      </div>
+    </div>
+    <div class="dash-actions">
+      <button class="topbar-btn btn-ghost" onclick="exportCSV('ps')">↓ Export CSV</button>
+      <button class="topbar-btn btn-primary" onclick="triggerImport('ps')">↑ Import CSV</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <div class="kpi-row c3">
+      <div class="kpi" style="--kpi-color:#059669">
+        <div class="kpi-top"><div class="kpi-label">Bus Familiarisation</div><div class="kpi-emoji">🚌</div></div>
+        <div class="kpi-val" style="color:#059669" id="ps-k1">6,137</div><div class="kpi-sub">Bus familiarisation records</div><div class="kpi-bar" style="background:#059669"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:#059669">
+        <div class="kpi-top"><div class="kpi-label">Route Familiarisation</div><div class="kpi-emoji">🗺️</div></div>
+        <div class="kpi-val" style="color:#059669" id="ps-k2">3,168</div><div class="kpi-sub">Route training records</div><div class="kpi-bar" style="background:#059669"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:#059669">
+        <div class="kpi-top"><div class="kpi-label">Tourism Training</div><div class="kpi-emoji">🌍</div></div>
+        <div class="kpi-val" style="color:#059669" id="ps-k3">9</div><div class="kpi-sub">Tourism route records</div><div class="kpi-bar" style="background:#059669"></div>
+      </div>
+    </div>
+    <div class="charts-row c2">
+      <div class="chart-card">
+        <div class="chart-head">Pre-Service Type Breakdown</div>
+        <div class="chart-wrap h240"><canvas id="ps-c1"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">By Depot</div>
+        <div class="chart-wrap h240"><canvas id="ps-c2"></canvas></div>
+      </div>
+    </div>
+    <div class="section-head">Pre-Service Records</div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span class="table-title-text">Pre-Service Training</span>
+          <span class="row-count" id="ps-row-count">0 rows</span>
+        </div>
+        <div class="table-toolbar-right">
+          <div class="search-box">🔍 <input type="text" placeholder="Search…" id="ps-search" oninput="filterTable('ps')"/></div>
+          <button class="topbar-btn btn-ghost" onclick="addRow('ps')">+ Add Row</button>
+          <button class="topbar-btn btn-primary" onclick="exportCSV('ps')">↓ Export</button>
+        </div>
+      </div>
+      <div class="tbl-scroll">
+        <table id="ps-table">
+          <thead><tr><th>#</th><th>Date</th><th>Staff ID</th><th>Driver Name</th><th>Nationality</th><th>Depot</th><th>Type</th><th>Course</th><th>Trainer</th><th>Attendance</th><th>Action</th></tr></thead>
+          <tbody id="ps-tbody"></tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addRow('ps')">+ Add New Row</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD: RECRUITMENT ══════════════ -->
+<div class="page" id="page-recruitment">
+  <div class="dash-header">
+    <div>
+      <div class="dash-breadcrumb">
+        <span class="breadcrumb-home" onclick="goHome()">Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Public Bus Recruitment</span>
+      </div>
+      <div class="dash-title-row" style="margin-top:6px">
+        <div class="dash-icon" style="background:#ede9fe">👥</div>
+        <div class="dash-title">Recruitment Dashboard</div>
+      </div>
+    </div>
+    <div class="dash-actions">
+      <button class="topbar-btn btn-ghost" onclick="exportCSV('rc')">↓ Export CSV</button>
+      <button class="topbar-btn btn-primary" onclick="triggerImport('rc')">↑ Import CSV</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <div class="kpi-row c3">
+      <div class="kpi" style="--kpi-color:#7c3aed">
+        <div class="kpi-top"><div class="kpi-label">Total Drivers</div><div class="kpi-emoji">👥</div></div>
+        <div class="kpi-val" style="color:#7c3aed">103,635</div><div class="kpi-sub">Across all datasets</div><div class="kpi-bar" style="background:#7c3aed"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:#7c3aed">
+        <div class="kpi-top"><div class="kpi-label">Top Nationality</div><div class="kpi-emoji">🌍</div></div>
+        <div class="kpi-val" style="color:#7c3aed;font-size:20px">Pakistan</div><div class="kpi-sub">44,464 in training records</div><div class="kpi-bar" style="background:#7c3aed"></div>
+      </div>
+      <div class="kpi" style="--kpi-color:#7c3aed">
+        <div class="kpi-top"><div class="kpi-label">Nationalities</div><div class="kpi-emoji">🗺️</div></div>
+        <div class="kpi-val" style="color:#7c3aed">40+</div><div class="kpi-sub">Diverse workforce</div><div class="kpi-bar" style="background:#7c3aed"></div>
+      </div>
+    </div>
+    <div class="charts-row c2">
+      <div class="chart-card">
+        <div class="chart-head">Nationality Distribution (Top 10)</div>
+        <div class="chart-wrap h280"><canvas id="rc-c1"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">Depot Headcount</div>
+        <div class="chart-wrap h280"><canvas id="rc-c2"></canvas></div>
+      </div>
+    </div>
+    <div class="section-head">Recruitment Records</div>
+    <div class="table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span class="table-title-text">Recruitment Data</span>
+          <span class="row-count" id="rc-row-count">0 rows</span>
+        </div>
+        <div class="table-toolbar-right">
+          <div class="search-box">🔍 <input type="text" placeholder="Search…" id="rc-search" oninput="filterTable('rc')"/></div>
+          <button class="topbar-btn btn-ghost" onclick="addRow('rc')">+ Add Row</button>
+          <button class="topbar-btn btn-primary" onclick="exportCSV('rc')">↓ Export</button>
+        </div>
+      </div>
+      <div class="tbl-scroll">
+        <table id="rc-table">
+          <thead><tr><th>#</th><th>Staff ID</th><th>Name</th><th>Nationality</th><th>Depot</th><th>Hire Date</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="rc-tbody"></tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addRow('rc')">+ Add New Row</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DASHBOARD: CUSTOM ══════════════ -->
+<div class="page" id="page-custom">
+  <div class="dash-header">
+    <div>
+      <div class="dash-breadcrumb">
+        <span class="breadcrumb-home" onclick="goHome()">Home</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Custom View</span>
+      </div>
+      <div class="dash-title-row" style="margin-top:6px">
+        <div class="dash-icon" style="background:#cffafe">⚡</div>
+        <div class="dash-title">Custom CSV Dashboard</div>
+      </div>
+    </div>
+    <div class="dash-actions">
+      <button class="topbar-btn btn-ghost" onclick="exportCSV('cu')">↓ Export CSV</button>
+      <button class="topbar-btn btn-primary" onclick="triggerImport('cu')">↑ Import CSV</button>
+    </div>
+  </div>
+  <div class="dash-body">
+    <div id="custom-empty" style="text-align:center;padding:80px 40px;">
+      <div style="font-size:48px;margin-bottom:16px">📂</div>
+      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--gray-700);margin-bottom:8px">Import any CSV file</div>
+      <div style="font-size:13px;color:var(--gray-500);margin-bottom:24px">Charts and a searchable table will be generated automatically.</div>
+      <button class="topbar-btn btn-primary" style="margin:0 auto" onclick="triggerImport('cu')">↑ Import CSV File</button>
+    </div>
+    <div id="custom-content" style="display:none">
+      <div class="kpi-row c4" id="cu-kpis"></div>
+      <div class="charts-row c2">
+        <div class="chart-card"><div class="chart-head" id="cu-ch1-title">Column 1</div><div class="chart-wrap h240"><canvas id="cu-c1"></canvas></div></div>
+        <div class="chart-card"><div class="chart-head" id="cu-ch2-title">Column 2</div><div class="chart-wrap h240"><canvas id="cu-c2"></canvas></div></div>
+      </div>
+      <div class="section-head">Imported Data Table</div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="table-toolbar-left">
+            <span class="table-title-text" id="cu-table-title">Custom Data</span>
+            <span class="row-count" id="cu-row-count">0 rows</span>
+          </div>
+          <div class="table-toolbar-right">
+            <div class="search-box">🔍 <input type="text" placeholder="Search…" id="cu-search" oninput="filterTable('cu')"/></div>
+            <button class="topbar-btn btn-primary" onclick="exportCSV('cu')">↓ Export</button>
+          </div>
+        </div>
+        <div class="tbl-scroll"><table id="cu-table"><thead id="cu-thead"></thead><tbody id="cu-tbody"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SETTINGS MODAL ══════════════ -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSettings()">✕</button>
+    <div class="modal-title">⚙ Settings</div>
+    <div class="setting-row"><span>Dashboard Name</span><input style="border:1.5px solid var(--gray-200);border-radius:6px;padding:6px 10px;font-size:12px;font-family:'DM Sans',sans-serif;width:180px" value="Licensing Department"/></div>
+    <div class="setting-row"><span>Date Format</span><select class="filter-sel"><option>DD-MMM-YY</option><option>YYYY-MM-DD</option></select></div>
+    <div class="setting-row"><span>Rows per table page</span><select class="filter-sel"><option>200</option><option>500</option><option>All</option></select></div>
+    <div class="setting-row"><span>Export includes all rows</span><span style="color:var(--green);font-weight:600">✓ Yes</span></div>
+    <div style="margin-top:20px;text-align:right">
+      <button class="topbar-btn btn-primary" onclick="closeSettings()">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ TOAST ══════════════ -->
+<div class="toast" id="toast">✓ <span id="toast-msg"></span></div>
+
+<script>
+// ══════════════════════════════════════
+//  DATA STORE
+// ══════════════════════════════════════
+const DB = {
+  is: [], tx: [], ba: [], ps: [], rc: [], cu: [],
+  isHeaders: ['Training Date','Staff ID','Driver Name','Nationality','Depot','Type of Training','Training Course Name','Duration','Trainer','Attendance'],
+  txHeaders: ['Date of Accident','Time_HHMM','Severity of Accident','Primary Cause of Accident','Collision Type','Location of Accident','Age of the driver','Nationality of the driver','Experience_Group','Convicted(Y/N)'],
+  baHeaders: ['Accident Date','Driver Name','Nationality','Depot','Accident Category','Bus Type','Route','Is Preventable','Accident Status','Training Status'],
+  psHeaders: ['Training Date','Staff ID','Driver Name','Nationality','Depot','Type of Training','Training Course Name','Trainer','Attendance'],
+  rcHeaders: ['Staff ID','Driver Name','Nationality','Depot','Hire Date','Status'],
+  cuHeaders: []
+};
+
+// Embedded summary data
+const SUMM = {
+  is_total:100579, is_present:97682, is_absent:2897,
+  is_depot:{"Jebel Ali":7656,"Al Khawaneej":6679,"Al Qusais":9860,"Al Awir":20826,"School":31069,"Al Quoz":11120,"Etisalat":132,"Al Ruwayah":13228},
+  is_type:{"Awareness":46107,"School Bus Training":31069,"Refresher":5928,"Bus Familiarisation":6137,"Route Familiarisation":3168,"HSE":5856,"Remedial":2305,"Tourism":9},
+  is_att:{"Present":97682,"Absent":2897},
+  is_nat:{"Pakistan":44464,"India":36784,"Philippines":4869,"Sri Lanka":3243,"Nepal":3153,"Egypt":3102,"Sudan":1828,"Bangladesh":993,"Kenya":700},
+  is_trend:{"2023-01":1407,"2023-02":1175,"2023-03":1360,"2023-04":1483,"2023-05":1634,"2023-06":1163,"2023-07":1962,"2023-08":4149,"2023-09":3214,"2023-10":6265,"2023-11":5782,"2023-12":5506,"2024-01":5953,"2024-02":2853,"2024-03":3954,"2024-04":2664,"2024-05":3429,"2024-06":2503,"2024-07":5519,"2024-08":4119,"2024-09":1912,"2024-10":1553,"2024-11":1077,"2024-12":1684,"2025-01":2210,"2025-02":2068,"2025-03":1828,"2025-04":2707,"2025-05":1831,"2025-06":2724,"2025-07":3002,"2025-08":2189,"2025-09":1573,"2025-10":1141,"2025-11":1020,"2025-12":908,"2026-01":1733,"2026-02":3325},
+
+  tx_total:546,
+  tx_sev:{"Non Injury Case":185,"Slight":177,"Medium":149,"Serious":23,"Fatal":12},
+  tx_cause:{"Driving Too Close":165,"Sudden Manouvers":94,"Influence Of Alcohol":53,"Unsafe Entry To Road":45,"Lack Of Consideration":43,"Lack Of Lane Discipline":38,"Violating Red Signals":36,"Driving Without Due Care":31,"Driving Against Traffic":10,"Dangerous Turning":9},
+  tx_coll:{"Head To Tail":239,"Side To Side":180,"Pedestrian":53,"Head To Side":42,"Head On":14,"Turning":8,"Stationary":7,"Other":3},
+  tx_nat:{"Pakistan":245,"Bangladesh":133,"Unknown":60,"Other":56,"India":39,"Egypt":6,"Sudan":3,"Iran":1},
+  tx_trend:{"2023":{"Jan":14,"Feb":19,"Mar":17,"Apr":9,"May":17,"Jun":10,"Jul":14,"Aug":18,"Sep":12,"Oct":13,"Nov":17,"Dec":16},"2024":{"Jan":12,"Feb":16,"Mar":16,"Apr":19,"May":16,"Jun":12,"Jul":12,"Aug":19,"Sep":14,"Oct":18,"Nov":16,"Dec":16},"2025":{"Jan":8,"Feb":12,"Mar":15,"Apr":18,"May":27,"Jun":18,"Jul":11,"Aug":8,"Sep":22,"Oct":17,"Nov":11,"Dec":17}},
+
+  ba_total:2510, ba_prev_yes:875, ba_fault:536, ba_train:512,
+  ba_cat:{"Minor":2437,"Moderate":65,"Major":8},
+  ba_depot:{"Al Awir Depot":545,"Al Quoz Depot":577,"Al Qusais Depot":332,"Al Ruwayah Depot":425,"Al Khawaneej Depot":268,"Jebel Ali Depot":290,"Etisalat Depot":73},
+  ba_prev:{"Not Preventable":1635,"Preventable":875},
+  ba_bustype:{"Standard":1733,"Double Decker":259,"Articulated":214,"Volvo Coach":176,"MIDI":128},
+  ba_trend:{"2025-01":157,"2025-02":135,"2025-03":151,"2025-04":230,"2025-05":228,"2025-06":214,"2025-07":222,"2025-08":225,"2025-09":245,"2025-10":274,"2025-11":237,"2025-12":192}
+};
+
+// ══════════════════════════════════════
+//  CHART ENGINE
+// ══════════════════════════════════════
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#e2e8f0';
+
+const BLUE_PAL = ['#1e5fcb','#2563eb','#3b82f6','#60a5fa','#93c5fd','#bfdbfe','#0d2b5e','#1a4494'];
+const MULTI_PAL = ['#1e5fcb','#059669','#d97706','#dc2626','#7c3aed','#0891b2','#0d2b5e','#65a30d'];
+
+const chartReg = {};
+
+function mkChart(id, type, labels, data, opts={}) {
+  if (chartReg[id]) { chartReg[id].destroy(); }
+  const ctx = document.getElementById(id);
+  if (!ctx) return null;
+  const isRound = type==='doughnut'||type==='pie';
+  const colors = opts.colors || (isRound ? MULTI_PAL : BLUE_PAL);
+  const datasets = opts.datasets || [{
+    label: opts.label||'',
+    data,
+    backgroundColor: isRound ? colors : (type==='line' ? 'rgba(30,95,203,0.1)' : colors),
+    borderColor: type==='line' ? '#1e5fcb' : (isRound ? colors : colors.map(c=>c+'dd')),
+    borderWidth: type==='line' ? 2 : 1,
+    fill: type==='line',
+    tension: 0.4,
+    pointRadius: type==='line' ? 2 : 0,
+    pointHoverRadius: type==='line' ? 5 : 0,
+    borderRadius: type==='bar' ? 5 : 0,
+  }];
+  const chart = new Chart(ctx, {
+    type, data:{ labels, datasets },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      animation:{ duration:500, easing:'easeInOutQuart' },
+      plugins:{
+        legend:{ display: isRound || !!opts.legend,
+          position:'bottom',
+          labels:{ boxWidth:9, padding:12, color:'#64748b', font:{size:10.5} }
+        },
+        tooltip:{
+          backgroundColor:'#0d2b5e', titleColor:'#fff',
+          bodyColor:'rgba(255,255,255,.75)',
+          borderColor:'#1a4494', borderWidth:1, padding:10,
+          cornerRadius:8,
+        }
+      },
+      scales: isRound ? {} : {
+        x:{ grid:{ color:'#f1f5f9' }, ticks:{ maxRotation:45 } },
+        y:{ grid:{ color:'#f1f5f9' }, beginAtZero:true }
+      },
+      ...(opts.extra||{})
+    }
+  });
+  chartReg[id] = chart;
+  return chart;
+}
+
+function updChart(id, labels, data) {
+  const c = chartReg[id];
+  if (!c) return;
+  c.data.labels = labels;
+  c.data.datasets[0].data = data;
+  c.update();
+}
+
+// ══════════════════════════════════════
+//  RENDER FUNCTIONS
+// ══════════════════════════════════════
+function renderIS() {
+  const yr = document.getElementById('is-f-year')?.value||'';
+  const dp = document.getElementById('is-f-depot')?.value||'';
+  const tp = document.getElementById('is-f-type')?.value||'';
+  const at = document.getElementById('is-f-att')?.value||'';
+
+  let rows = DB.is.length ? DB.is : [];
+  let depot = {...SUMM.is_depot}, type = {...SUMM.is_type}, att = {...SUMM.is_att};
+  let nat = {...SUMM.is_nat}, trend = {...SUMM.is_trend};
+  let total = SUMM.is_total, present = SUMM.is_present, absent = SUMM.is_absent;
+
+  if (DB.is.length) {
+    let f = DB.is;
+    if (yr) f = f.filter(r=>(r['Training Date']||'').includes(yr));
+    if (dp) f = f.filter(r=>(r['Depot']||'').trim()===dp.trim());
+    if (tp) f = f.filter(r=>(r['Type of Training']||'').trim()===tp.trim());
+    if (at) f = f.filter(r=>(r['Attendance']||'').trim()===at.trim());
+    total = f.length;
+    present = f.filter(r=>r['Attendance']==='Present').length;
+    absent = f.filter(r=>r['Attendance']==='Absent').length;
+    depot = countBy(f,'Depot'); type = countBy(f,'Type of Training');
+    att = countBy(f,'Attendance'); nat = topN(countBy(f,'Nationality'),9);
+    trend = buildTrend(f,'Training Date');
+    renderTableIS(f);
+  } else {
+    renderTableIS([]);
+  }
+
+  setText('is-k1', total.toLocaleString());
+  setText('is-k2', total ? ((present/total)*100).toFixed(1)+'%' : '—');
+  setText('is-k2s', present.toLocaleString()+' present');
+  setText('is-k3', absent.toLocaleString());
+  setText('is-k4', Object.keys(depot).length);
+
+  mkChart('is-c1','line',Object.keys(trend),Object.values(trend),{label:'Sessions'});
+  mkChart('is-c2','doughnut',Object.keys(type),Object.values(type));
+  mkChart('is-c3','bar',Object.keys(depot),Object.values(depot));
+  mkChart('is-c4','doughnut',Object.keys(att),Object.values(att),{colors:['#059669','#dc2626']});
+  mkChart('is-c5','bar',Object.keys(nat),Object.values(nat),{extra:{indexAxis:'y'}});
+}
+
+function renderTX() {
+  const yr = document.getElementById('tx-f-year')?.value||'';
+  const sv = document.getElementById('tx-f-sev')?.value||'';
+  const nt = document.getElementById('tx-f-nat')?.value||'';
+
+  let sev,cause,coll,nat,total,fatal,serious,slightMed,noninj;
+
+  if (DB.tx.length) {
+    let f = DB.tx;
+    if (yr) f = f.filter(r=>r['Year']===yr||(r['Date of Accident']||'').includes(yr));
+    if (sv) f = f.filter(r=>(r['Severity of Accident']||'')=== sv);
+    if (nt) f = f.filter(r=>(r['Nationality of the driver']||'')===nt);
+    total = f.length;
+    sev = countBy(f,'Severity of Accident');
+    cause = topN(countBy(f,'Primary Cause of Accident'),10);
+    coll = countBy(f,'Collision Type');
+    nat = topN(countBy(f,'Nationality of the driver'),8);
+    fatal = sev['*Fatal *']||0; serious = sev['Serious']||0;
+    slightMed=(sev['Slight']||0)+(sev['Medium']||0); noninj=sev['Non Injury Case']||0;
+    renderTableTX(f);
+  } else {
+    total=SUMM.tx_total; sev={...SUMM.tx_sev}; cause={...SUMM.tx_cause};
+    coll={...SUMM.tx_coll}; nat={...SUMM.tx_nat};
+    fatal=12; serious=23; slightMed=326; noninj=185;
+    renderTableTX([]);
+  }
+
+  setText('tx-k1',total.toLocaleString());
+  setText('tx-k2',fatal); setText('tx-k3',serious);
+  setText('tx-k4',slightMed); setText('tx-k5',noninj);
+
+  // Multi-line trend
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const t = SUMM.tx_trend;
+  const ctx = document.getElementById('tx-c1');
+  if (chartReg['tx-c1']) chartReg['tx-c1'].destroy();
+  chartReg['tx-c1'] = new Chart(ctx, {
+    type:'line',
+    data:{ labels:months, datasets:[
+      {label:'2023',data:Object.values(t['2023']),borderColor:'#1e5fcb',backgroundColor:'transparent',tension:.4,pointRadius:2},
+      {label:'2024',data:Object.values(t['2024']),borderColor:'#d97706',backgroundColor:'transparent',tension:.4,pointRadius:2},
+      {label:'2025',data:Object.values(t['2025']),borderColor:'#059669',backgroundColor:'transparent',tension:.4,pointRadius:2},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},
+      plugins:{legend:{display:true,position:'top',labels:{boxWidth:9,padding:12,font:{size:10.5}}},
+        tooltip:{backgroundColor:'#0d2b5e',borderColor:'#1a4494',borderWidth:1,padding:10}},
+      scales:{x:{grid:{color:'#f1f5f9'}},y:{grid:{color:'#f1f5f9'},beginAtZero:true}}}
+  });
+
+  mkChart('tx-c2','doughnut',Object.keys(sev),Object.values(sev),{colors:['#059669','#65a30d','#d97706','#dc2626','#7f1d1d']});
+  mkChart('tx-c3','bar',Object.keys(cause),Object.values(cause),{extra:{indexAxis:'y'}});
+  mkChart('tx-c4','doughnut',Object.keys(coll),Object.values(coll));
+  mkChart('tx-c5','bar',Object.keys(nat),Object.values(nat),{extra:{indexAxis:'y'}});
+}
+
+function renderBA() {
+  const dp = document.getElementById('ba-f-depot')?.value||'';
+  const ct = document.getElementById('ba-f-cat')?.value||'';
+  const pv = document.getElementById('ba-f-prev')?.value||'';
+
+  let cat,depot,prev,bustype,trend,total,prevY,fault,train;
+
+  if (DB.ba.length) {
+    let f = DB.ba;
+    if (dp) f = f.filter(r=>(r['Depot']||'').includes(dp));
+    if (ct) f = f.filter(r=>(r['Accident Category']||'')===ct);
+    if (pv) f = f.filter(r=>(r['Is Preventable']||'')===pv);
+    total=f.length;
+    cat=countBy(f,'Accident Category'); depot=countBy(f,'Depot');
+    const s=countBy(f,'Accident Status');
+    fault=(s['Driver fault']||0)+(s['Driver Fault']||0)+(s['Court case']||0);
+    prev=countBy(f,'Is Preventable');
+    prevY=prev['Yes']||0;
+    train=countBy(f,'Training Status')['Attend Training']||0;
+    bustype=countBy(f,'Bus Type');
+    trend=buildTrend(f,'Accident Date');
+    renderTableBA(f);
+  } else {
+    total=SUMM.ba_total; cat={...SUMM.ba_cat}; depot={...SUMM.ba_depot};
+    prev={...SUMM.ba_prev}; bustype={...SUMM.ba_bustype}; trend={...SUMM.ba_trend};
+    prevY=SUMM.ba_prev_yes; fault=SUMM.ba_fault; train=SUMM.ba_train;
+    renderTableBA([]);
+  }
+
+  setText('ba-k1',total.toLocaleString()); setText('ba-k2',prevY.toLocaleString());
+  setText('ba-k2s', total?((prevY/total)*100).toFixed(1)+'% of total':'—');
+  setText('ba-k3',fault.toLocaleString()); setText('ba-k4',train.toLocaleString());
+
+  mkChart('ba-c1','line',Object.keys(trend),Object.values(trend),{label:'Accidents'});
+  mkChart('ba-c2','doughnut',Object.keys(cat),Object.values(cat),{colors:['#3b82f6','#d97706','#dc2626']});
+  mkChart('ba-c3','bar',Object.keys(depot),Object.values(depot));
+  mkChart('ba-c4','doughnut',['Not Preventable','Preventable'],[prev['Not Preventable']||1635,prev['Preventable']||875],{colors:['#059669','#dc2626']});
+  mkChart('ba-c5','bar',Object.keys(bustype),Object.values(bustype));
+}
+
+function renderPS() {
+  let rows = DB.is.filter(r=>['Bus Familiarization','Buses Familiarization','Route Familiarization','Tourism Training'].includes((r['Type of Training']||'').trim()));
+  mkChart('ps-c1','doughnut',['Bus Familiarisation','Route Familiarisation','Tourism'],
+    [6137,3168,9],{colors:MULTI_PAL});
+  mkChart('ps-c2','bar',Object.keys(SUMM.is_depot),Object.values(SUMM.is_depot));
+  setText('ps-row-count', rows.length ? rows.length+' rows' : '9,314 (from In-Service data)');
+  if (rows.length) renderTableGeneric('ps',rows,DB.psHeaders);
+}
+
+function renderRC() {
+  mkChart('rc-c1','bar',Object.keys(SUMM.is_nat),Object.values(SUMM.is_nat),{extra:{indexAxis:'y'}});
+  mkChart('rc-c2','bar',Object.keys(SUMM.is_depot),Object.values(SUMM.is_depot));
+  setText('rc-row-count', DB.rc.length ? DB.rc.length+' rows' : 'Import CSV to load');
+  if (DB.rc.length) renderTableGeneric('rc',DB.rc,DB.rcHeaders);
+}
+
+// ══════════════════════════════════════
+//  TABLE RENDERERS
+// ══════════════════════════════════════
+function severityBadge(v) {
+  const m={'Non Injury Case':'b-green','Slight':'b-blue','Medium':'b-amber','Serious':'b-red','*Fatal *':'b-red'};
+  return `<span class="badge ${m[v]||'b-gray'}">${v||'—'}</span>`;
+}
+function attBadge(v) { return `<span class="badge ${v==='Present'?'b-green':'b-red'}">${v||'—'}</span>`; }
+function prevBadge(v) { return `<span class="badge ${v==='Yes'?'b-red':'b-green'}">${v||'—'}</span>`; }
+function catBadge(v) { return `<span class="badge ${v==='Minor'?'b-blue':v==='Moderate'?'b-amber':'b-red'}">${v||'—'}</span>`; }
+
+function renderTableIS(rows) {
+  const tbody = document.getElementById('is-tbody');
+  const display = rows.length ? rows : Array(5).fill({}).map((_,i)=>({
+    'Training Date':'2-Jan-25','Staff ID':'80821','Driver Name':'Sample Driver '+i,
+    'Nationality':'India','Depot':'Al Awir','Type of Training':'Awareness',
+    'Training Course Name':'Ambassador','Duration':'01 Day','Trainer':'Amin','Attendance':'Present'
+  }));
+  setText('is-row-count', (rows.length||SUMM.is_total).toLocaleString()+' rows');
+  tbody.innerHTML = display.slice(0,200).map((r,i)=>`
+    <tr>
+      <td style="color:var(--gray-300)">${i+1}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Training Date']||''}</td>
+      <td>${r['Staff ID']||''}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Driver Name']||''}</td>
+      <td>${r['Nationality']||''}</td>
+      <td>${r['Depot']||''}</td>
+      <td>${r['Type of Training']||''}</td>
+      <td class="editable" ondblclick="editCell(this)">${(r['Training Course Name']||'').substring(0,28)}</td>
+      <td>${r['Duration']||''}</td>
+      <td>${r['Trainer']||''}</td>
+      <td>${attBadge(r['Attendance'])}</td>
+      <td><button onclick="deleteRow(this)" style="background:none;border:none;color:var(--gray-300);cursor:pointer;font-size:14px;padding:2px 6px" title="Delete">✕</button></td>
+    </tr>`).join('');
+}
+
+function renderTableTX(rows) {
+  const tbody = document.getElementById('tx-tbody');
+  const display = rows.length ? rows : [];
+  setText('tx-row-count',(rows.length||SUMM.tx_total)+' rows');
+  tbody.innerHTML = display.slice(0,200).map((r,i)=>`
+    <tr>
+      <td style="color:var(--gray-300)">${i+1}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Date of Accident']||''}</td>
+      <td>${r['Time_HHMM']||''}</td>
+      <td>${severityBadge(r['Severity of Accident'])}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Primary Cause of Accident']||''}</td>
+      <td>${r['Collision Type']||''}</td>
+      <td>${(r['Location of Accident']||'').substring(0,28)}</td>
+      <td>${r['Age of the driver']||''}</td>
+      <td>${r['Nationality of the driver']||''}</td>
+      <td>${r['Experience_Group']||''}</td>
+      <td><span class="badge ${r['Convicted(Y/N)']=='Y'?'b-red':'b-green'}">${r['Convicted(Y/N)']||'N'}</span></td>
+      <td><button onclick="deleteRow(this)" style="background:none;border:none;color:var(--gray-300);cursor:pointer;font-size:14px;padding:2px 6px" title="Delete">✕</button></td>
+    </tr>`).join('');
+  if (!display.length) {
+    tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;padding:40px;color:var(--gray-500)">Import the CSV file to view records — use ↑ Import CSV above</td></tr>`;
+  }
+}
+
+function renderTableBA(rows) {
+  const tbody = document.getElementById('ba-tbody');
+  const display = rows.length ? rows : [];
+  setText('ba-row-count',(rows.length||SUMM.ba_total)+' rows');
+  tbody.innerHTML = display.slice(0,200).map((r,i)=>`
+    <tr>
+      <td style="color:var(--gray-300)">${i+1}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Accident Date']||''}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Driver Name']||''}</td>
+      <td>${r['Nationality']||''}</td>
+      <td>${r['Depot']||''}</td>
+      <td>${catBadge(r['Accident Category'])}</td>
+      <td>${r['Bus Type']||''}</td>
+      <td>${r['Route']||''}</td>
+      <td>${prevBadge(r['Is Preventable'])}</td>
+      <td>${r['Accident Status']||''}</td>
+      <td><span class="badge ${r['Training Status']==='Attend Training'?'b-green':'b-amber'}">${(r['Training Status']||'').replace('Not Apply Training','Not Applied')}</span></td>
+      <td><button onclick="deleteRow(this)" style="background:none;border:none;color:var(--gray-300);cursor:pointer;font-size:14px;padding:2px 6px">✕</button></td>
+    </tr>`).join('');
+  if (!display.length) {
+    tbody.innerHTML = `<tr><td colspan="12" style="text-align:center;padding:40px;color:var(--gray-500)">Import the CSV file to view records — use ↑ Import CSV above</td></tr>`;
+  }
+}
+
+function renderTableGeneric(key, rows, headers) {
+  const tbody = document.getElementById(key+'-tbody');
+  if (!tbody) return;
+  setText(key+'-row-count', rows.length+' rows');
+  tbody.innerHTML = rows.slice(0,200).map((r,i)=>`
+    <tr>
+      <td style="color:var(--gray-300)">${i+1}</td>
+      ${headers.map(h=>`<td class="editable" ondblclick="editCell(this)">${(r[h]||'').toString().substring(0,30)}</td>`).join('')}
+      <td><button onclick="deleteRow(this)" style="background:none;border:none;color:var(--gray-300);cursor:pointer;font-size:14px;padding:2px 6px">✕</button></td>
+    </tr>`).join('');
+}
+
+// ══════════════════════════════════════
+//  TABLE INTERACTIONS
+// ══════════════════════════════════════
+function editCell(td) {
+  td.setAttribute('contenteditable','true');
+  td.focus();
+  td.onblur = ()=>{ td.removeAttribute('contenteditable'); showToast('Cell updated'); };
+  td.onkeydown = (e)=>{ if(e.key==='Enter'){ e.preventDefault(); td.blur(); } };
+}
+
+function deleteRow(btn) {
+  if (confirm('Delete this row?')) {
+    btn.closest('tr').remove();
+    showToast('Row deleted');
+  }
+}
+
+function addRow(key) {
+  const tbodies = {'is':'is-tbody','tx':'tx-tbody','ba':'ba-tbody','ps':'ps-tbody','rc':'rc-tbody','cu':'cu-tbody'};
+  const tbody = document.getElementById(tbodies[key]);
+  if (!tbody) return;
+  const existing = tbody.querySelectorAll('tr');
+  const cols = document.querySelector(`#${key}-table thead th`)?.parentElement?.children?.length || 8;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td style="color:var(--gray-300)">${existing.length+1}</td>`
+    + Array(cols-2).fill('<td class="editable" ondblclick="editCell(this)" style="color:var(--gray-500);font-style:italic">click to edit</td>').join('')
+    + `<td><button onclick="deleteRow(this)" style="background:none;border:none;color:var(--gray-300);cursor:pointer;font-size:14px;padding:2px 6px">✕</button></td>`;
+  tbody.appendChild(tr);
+  tbody.scrollTop = tbody.scrollHeight;
+  showToast('New row added — double-click cells to edit');
+}
+
+function filterTable(key) {
+  const input = document.getElementById(key+'-search');
+  if (!input) return;
+  const q = input.value.toLowerCase();
+  const tbody = document.getElementById(key+'-tbody');
+  if (!tbody) return;
+  tbody.querySelectorAll('tr').forEach(tr=>{
+    tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+function sortTable(key, col) {
+  const tbody = document.getElementById(key+'-tbody');
+  if (!tbody) return;
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a,b)=>{
+    const av = a.cells[col]?.textContent||'';
+    const bv = b.cells[col]?.textContent||'';
+    return av.localeCompare(bv, undefined, {numeric:true});
+  });
+  rows.forEach(r=>tbody.appendChild(r));
+}
+
+// ══════════════════════════════════════
+//  CSV IMPORT / EXPORT
+// ══════════════════════════════════════
+const importTarget = { current: null };
+
+document.getElementById('fileInput').addEventListener('change', function(e) {
+  Array.from(e.target.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const text = ev.target.result.replace(/\xff|\xfe/g,'');
+      const rows = parseCSV(text);
+      if (!rows.length) return;
+      const headers = Object.keys(rows[0]).map(h=>h.toLowerCase());
+
+      const target = importTarget.current;
+
+      if (target === 'cu') {
+        DB.cu = rows; DB.cuHeaders = Object.keys(rows[0]);
+        buildCustomDash(rows, file.name);
+      } else if (target === 'tx' || headers.includes('severity of accident')) {
+        DB.tx = rows;
+        populateFilter('tx-f-nat','Nationality of the driver',rows);
+        renderTX();
+      } else if (target === 'ba' || headers.includes('accident category')) {
+        DB.ba = rows;
+        populateFilter('ba-f-depot','Depot',rows);
+        renderBA();
+      } else if (target === 'is' || headers.includes('type of training')) {
+        DB.is = rows;
+        populateFilter('is-f-depot','Depot',rows);
+        populateFilter('is-f-type','Type of Training',rows);
+        renderIS();
+        renderPS();
+      } else if (target === 'ps') {
+        DB.ps = rows; renderPS();
+      } else if (target === 'rc') {
+        DB.rc = rows; renderRC();
+      }
+
+      importTarget.current = null;
+      showToast(`✓ ${file.name} imported — dashboard updated`);
+    };
+    reader.readAsText(file);
+  });
+  this.value = '';
+});
+
+function triggerImport(key) {
+  importTarget.current = key;
+  document.getElementById('fileInput').click();
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const headers = splitCSVLine(lines[0]);
+  return lines.slice(1).map(line=>{
+    const vals = splitCSVLine(line);
+    const obj = {};
+    headers.forEach((h,i)=>{ obj[h] = (vals[i]||'').trim(); });
+    return obj;
+  }).filter(r=>Object.values(r).some(v=>v));
+}
+
+function splitCSVLine(line) {
+  const result=[]; let cur=''; let inQ=false;
+  for (let i=0;i<line.length;i++) {
+    if (line[i]==='"') { inQ=!inQ; }
+    else if (line[i]===',' && !inQ) { result.push(cur.trim()); cur=''; }
+    else { cur+=line[i]; }
+  }
+  result.push(cur.trim());
+  return result.map(s=>s.replace(/^"|"$/g,'').trim());
+}
+
+function exportCSV(key) {
+  const tbodies = {'is':'is-tbody','tx':'tx-tbody','ba':'ba-tbody','ps':'ps-tbody','rc':'rc-tbody','cu':'cu-tbody'};
+  const tbody = document.getElementById(tbodies[key]);
+  if (!tbody) return;
+  const table = tbody.closest('table');
+  const headers = Array.from(table.querySelectorAll('thead th')).map(th=>th.textContent).slice(1,-1);
+  const rows = Array.from(tbody.querySelectorAll('tr')).map(tr=>
+    Array.from(tr.querySelectorAll('td')).slice(1,-1).map(td=>'"'+td.textContent.trim()+'"').join(',')
+  );
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv],{type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `${key}_export_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('CSV exported successfully');
+}
+
+// ══════════════════════════════════════
+//  CUSTOM DASHBOARD BUILDER
+// ══════════════════════════════════════
+function buildCustomDash(rows, filename) {
+  document.getElementById('custom-empty').style.display = 'none';
+  document.getElementById('custom-content').style.display = 'block';
+  const headers = Object.keys(rows[0]);
+  DB.cuHeaders = headers;
+
+  // KPI cards - first 4 numeric columns
+  const numCols = headers.filter(h=>rows.slice(0,20).every(r=>!isNaN(parseFloat(r[h]))||r[h]===''));
+  const kpiDiv = document.getElementById('cu-kpis');
+  kpiDiv.innerHTML = headers.slice(0,4).map(h=>`
+    <div class="kpi" style="--kpi-color:var(--accent)">
+      <div class="kpi-top"><div class="kpi-label">${h}</div><div class="kpi-emoji">📊</div></div>
+      <div class="kpi-val" style="font-size:22px">${rows.length}</div>
+      <div class="kpi-sub">Total rows</div><div class="kpi-bar"></div>
+    </div>`).join('').replace(/Total rows/,'Total rows').slice(0,1)
+    + `<div class="kpi" style="--kpi-color:var(--accent)">
+      <div class="kpi-top"><div class="kpi-label">Total Records</div><div class="kpi-emoji">📊</div></div>
+      <div class="kpi-val">${rows.length.toLocaleString()}</div>
+      <div class="kpi-sub">${filename}</div><div class="kpi-bar"></div>
+    </div>`;
+
+  kpiDiv.innerHTML = `
+    <div class="kpi" style="--kpi-color:var(--accent)">
+      <div class="kpi-top"><div class="kpi-label">Total Records</div><div class="kpi-emoji">📊</div></div>
+      <div class="kpi-val">${rows.length.toLocaleString()}</div><div class="kpi-sub">${filename}</div><div class="kpi-bar"></div>
+    </div>
+    <div class="kpi" style="--kpi-color:var(--green)">
+      <div class="kpi-top"><div class="kpi-label">Columns</div><div class="kpi-emoji">📋</div></div>
+      <div class="kpi-val">${headers.length}</div><div class="kpi-sub">Data fields detected</div><div class="kpi-bar"></div>
+    </div>
+    ${headers.slice(0,2).map(h=>{
+      const vals = countBy(rows,h);
+      const top = Object.entries(vals).sort((a,b)=>b[1]-a[1])[0];
+      return `<div class="kpi" style="--kpi-color:var(--amber)">
+        <div class="kpi-top"><div class="kpi-label">${h}</div><div class="kpi-emoji">🔢</div></div>
+        <div class="kpi-val" style="font-size:16px">${top?top[0].substring(0,12):'—'}</div>
+        <div class="kpi-sub">Most common value</div><div class="kpi-bar"></div>
+      </div>`;
+    }).join('')}`;
+
+  // Auto-charts
+  const catCols = headers.filter(h=>{
+    const unique = new Set(rows.map(r=>r[h])).size;
+    return unique < 20 && unique > 1;
+  });
+
+  if (catCols[0]) {
+    const d = topN(countBy(rows,catCols[0]),10);
+    document.getElementById('cu-ch1-title').textContent = catCols[0];
+    mkChart('cu-c1','bar',Object.keys(d),Object.values(d));
+  }
+  if (catCols[1]) {
+    const d = topN(countBy(rows,catCols[1]),8);
+    document.getElementById('cu-ch2-title').textContent = catCols[1];
+    mkChart('cu-c2','doughnut',Object.keys(d),Object.values(d));
+  }
+
+  // Build table
+  document.getElementById('cu-table-title').textContent = filename.replace('.csv','');
+  const thead = document.getElementById('cu-thead');
+  thead.innerHTML = `<tr><th>#</th>${headers.map(h=>`<th>${h}</th>`).join('')}</tr>`;
+  const tbody = document.getElementById('cu-tbody');
+  tbody.innerHTML = rows.slice(0,200).map((r,i)=>`
+    <tr><td style="color:var(--gray-300)">${i+1}</td>
+    ${headers.map(h=>`<td class="editable" ondblclick="editCell(this)">${(r[h]||'').toString().substring(0,30)}</td>`).join('')}
+    </tr>`).join('');
+  setText('cu-row-count', rows.length+' rows');
+}
+
+// ══════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════
+function goHome() {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+}
+
+function openDash(key) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+key).classList.add('active');
+  window.scrollTo(0,0);
+  if (key==='inservice') renderIS();
+  else if (key==='taxi') renderTX();
+  else if (key==='busacc') renderBA();
+  else if (key==='preservice') renderPS();
+  else if (key==='recruitment') renderRC();
+}
+
+// ══════════════════════════════════════
+//  FILTERS
+// ══════════════════════════════════════
+function populateFilter(id, col, rows) {
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  const vals = [...new Set(rows.map(r=>(r[col]||'').trim()).filter(Boolean))].sort();
+  const first = sel.children[0].outerHTML;
+  sel.innerHTML = first + vals.map(v=>`<option value="${v}">${v}</option>`).join('');
+}
+
+function resetFilters(key) {
+  document.querySelectorAll(`[id^="${key}-f-"]`).forEach(s=>{ s.value=''; });
+  if (key==='is') renderIS();
+  else if (key==='tx') renderTX();
+  else if (key==='ba') renderBA();
+}
+
+// ══════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════
+function countBy(rows, key) {
+  const d={};
+  rows.forEach(r=>{ const v=(r[key]||'').trim(); if(v) d[v]=(d[v]||0)+1; });
+  return d;
+}
+function topN(obj, n) {
+  return Object.fromEntries(Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n));
+}
+function buildTrend(rows, dateCol) {
+  const mo={'jan':'01','feb':'02','mar':'03','apr':'04','may':'05','jun':'06','jul':'07','aug':'08','sep':'09','oct':'10','nov':'11','dec':'12'};
+  const d={};
+  rows.forEach(r=>{
+    const v=(r[dateCol]||'').trim();
+    if (!v) return;
+    const parts=v.split('-');
+    if (parts.length===3) {
+      const mon=mo[parts[1].toLowerCase()]||'00';
+      const yr=parts[2].length===2?'20'+parts[2]:parts[2];
+      const k=yr+'-'+mon;
+      d[k]=(d[k]||0)+1;
+    }
+  });
+  return Object.fromEntries(Object.entries(d).sort());
+}
+function setText(id,val) { const el=document.getElementById(id); if(el) el.textContent=val; }
+
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function openSettings() { document.getElementById('settings-modal').classList.add('open'); }
+function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
+function confirmLogout() { if(confirm('Log out of the dashboard?')) showToast('Logged out'); }
+
+// ══════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('topDate').textContent =
+    new Date().toLocaleDateString('en-AE',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+
+  // Init depot filters with known values
+  populateFilter('is-f-depot','Depot',[
+    {Depot:'Al Awir'},{Depot:'Al Khawaneej'},{Depot:'Al Qusais'},{Depot:'Al Quoz'},
+    {Depot:'Al Ruwayah'},{Depot:'Jebel Ali'},{Depot:'Etisalat'},{Depot:'School'}
+  ]);
+  populateFilter('is-f-type','Type of Training',[
+    {'Type of Training':'Awareness'},{'Type of Training':'School Bus Training'},
+    {'Type of Training':'Refresher'},{'Type of Training':'Bus Familiarization'},
+    {'Type of Training':'Route Familiarization'},{'Type of Training':'HSE'},
+    {'Type of Training':'Remedial'},{'Type of Training':'Tourism Training'}
+  ]);
+  populateFilter('ba-f-depot','Depot',[
+    {Depot:'Al Awir Depot'},{Depot:'Al Quoz Depot'},{Depot:'Al Qusais Depot'},
+    {Depot:'Al Ruwayah Depot'},{Depot:'Al Khawaneej Depot'},{Depot:'Jebel Ali Depot'},
+    {Depot:'Etisalat Depot'}
+  ]);
+
+  // Close modal on overlay click
+  document.getElementById('settings-modal').addEventListener('click',e=>{
+    if(e.target===e.currentTarget) closeSettings();
+  });
+});
+</script>
+</body>
+</html>
