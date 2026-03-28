@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RTA Licensing · Operations Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ─── TOKENS ─────────────────────────────────── */
+:root{
+  --navy:#0c1f4a; --navy2:#071438; --blue:#1a4fd6; --blue2:#1442b5;
+  --sky:#3b82f6;  --blue-soft:#eff6ff; --blue-mid:#dbeafe;
+  --white:#fff;   --g50:#f8fafc; --g100:#f1f5f9; --g200:#e2e8f0;
+  --g300:#cbd5e1; --g400:#94a3b8; --g500:#64748b; --g600:#475569;
+  --g700:#334155; --g900:#0f172a;
+  --green:#16a34a; --gs:#dcfce7;  --red:#dc2626;  --rs:#fee2e2;
+  --amber:#d97706; --as:#fef3c7;  --purple:#7c3aed; --ps:#f5f3ff;
+  --teal:#0891b2;  --ts:#ecfeff;  --emerald:#059669; --es:#f0fdf4;
+  --sh1:0 1px 2px rgba(0,0,0,.06);
+  --sh2:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --sh3:0 4px 14px rgba(12,31,74,.09),0 2px 4px rgba(12,31,74,.05);
+  --sh4:0 10px 32px rgba(12,31,74,.13),0 4px 10px rgba(12,31,74,.07);
+  --sh5:0 22px 54px rgba(12,31,74,.19),0 8px 22px rgba(12,31,74,.10);
+  --r:13px; --r2:9px; --r3:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--g50);color:var(--g900);-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--g100);}
+::-webkit-scrollbar-thumb{background:var(--g300);border-radius:99px;}
+::-webkit-scrollbar-thumb:hover{background:var(--blue);}
+
+/* ─── LOGIN ─────────────────────────────────── */
+#login-page{
+  min-height:100vh; display:flex;
+  background:linear-gradient(140deg,var(--navy2) 0%,var(--navy) 45%,#1a3a7a 100%);
+  position:relative; overflow:hidden;
+}
+#login-page::before{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 60% at 15% 25%,rgba(26,79,214,.30) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 50% at 85% 75%,rgba(59,130,246,.18) 0%,transparent 55%);
+}
+/* subtle grid lines */
+#login-page::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.login-left{
+  flex:1; display:flex; flex-direction:column; justify-content:center;
+  padding:64px 72px; position:relative; z-index:1;
+}
+.login-logo{display:flex;align-items:center;gap:14px;margin-bottom:56px;}
+.login-mark{
+  width:46px;height:46px;border-radius:12px;
+  background:var(--blue); display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:15px;color:#fff;letter-spacing:-.5px;
+  box-shadow:0 4px 14px rgba(26,79,214,.5);
+}
+.login-brand{font-size:15px;font-weight:700;color:rgba(255,255,255,.9);line-height:1.3;}
+.login-brand span{display:block;font-size:11px;font-weight:400;color:rgba(255,255,255,.4);margin-top:2px;}
+.login-headline{
+  font-size:42px;font-weight:800;color:#fff;line-height:1.1;
+  letter-spacing:-.8px;margin-bottom:18px;
+}
+.login-headline em{font-style:normal;color:var(--sky);}
+.login-sub{font-size:15px;color:rgba(255,255,255,.5);line-height:1.75;max-width:400px;}
+.login-stats{display:flex;gap:0;margin-top:56px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;overflow:hidden;width:fit-content;}
+.ls-item{padding:18px 30px;border-right:1px solid rgba(255,255,255,.08);}
+.ls-item:last-child{border-right:none;}
+.ls-val{font-size:24px;font-weight:800;color:#fff;line-height:1;}
+.ls-lbl{font-size:10px;color:rgba(255,255,255,.38);margin-top:4px;text-transform:uppercase;letter-spacing:1.2px;}
+.login-right{
+  width:480px;display:flex;align-items:center;justify-content:center;
+  padding:40px;position:relative;z-index:1;
+}
+.login-card{
+  background:#fff;border-radius:20px;padding:46px 42px;
+  width:100%;box-shadow:var(--sh5);
+}
+.lc-title{font-size:23px;font-weight:800;color:var(--navy);letter-spacing:-.3px;margin-bottom:5px;}
+.lc-sub{font-size:13px;color:var(--g500);margin-bottom:34px;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:12px;font-weight:600;color:var(--g700);margin-bottom:7px;letter-spacing:.2px;}
+.form-input{
+  width:100%;padding:11px 14px;font-size:13.5px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  border:1.5px solid var(--g200);border-radius:var(--r2);
+  background:var(--g50);color:var(--g900);outline:none;
+  transition:border-color .14s,box-shadow .14s,background .14s;
+}
+.form-input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(26,79,214,.10);}
+.form-input.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(220,38,38,.10);}
+.pw-wrap{position:relative;}
+.pw-wrap .form-input{padding-right:44px;}
+.pw-eye{
+  position:absolute;right:13px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;color:var(--g400);
+  font-size:15px;padding:2px;transition:color .14s;
+}
+.pw-eye:hover{color:var(--g700);}
+.form-error{font-size:11.5px;color:var(--red);margin-top:5px;display:none;align-items:center;gap:4px;}
+.form-error.visible{display:flex;}
+.login-btn{
+  width:100%;padding:12px;background:var(--blue);color:#fff;
+  border:none;border-radius:var(--r2);font-size:14px;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;
+  transition:background .14s,transform .1s,box-shadow .14s;
+  box-shadow:0 4px 14px rgba(26,79,214,.32);margin-top:4px;
+}
+.login-btn:hover{background:var(--blue2);box-shadow:0 6px 18px rgba(26,79,214,.42);}
+.login-btn:active{transform:scale(.99);}
+.login-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.lc-divider{text-align:center;font-size:11.5px;color:var(--g300);margin:22px 0;position:relative;}
+.lc-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--g200);}
+.lc-divider span{background:#fff;padding:0 12px;position:relative;}
+
+
+
+
+
+
+.demo-use{
+  background:none;border:1.5px solid var(--g200);border-radius:var(--r3);
+  padding:3px 9px;font-size:10.5px;cursor:pointer;color:var(--g600);
+  font-family:'Plus Jakarta Sans',sans-serif;transition:all .12s;
+}
+
+@media(max-width:940px){.login-left{display:none;}.login-right{width:100%;min-height:100vh;}.login-card{border-radius:0;box-shadow:none;min-height:100vh;}}
+
+/* ─── APP SHELL ──────────────────────────────── */
+#app{display:none;flex-direction:column;min-height:100vh;}
+#app.visible{display:flex;}
+
+/* TOPBAR */
+.topbar{
+  height:58px;background:#fff;
+  border-bottom:1px solid var(--g200);
+  display:flex;align-items:center;padding:0 30px;gap:16px;
+  position:sticky;top:0;z-index:300;box-shadow:var(--sh1);
+}
+.topbar-brand{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;}
+.tb-mark{width:32px;height:32px;border-radius:8px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;}
+.tb-name{font-size:14px;font-weight:700;color:var(--navy);}
+.tb-divider{width:1px;height:22px;background:var(--g200);flex-shrink:0;}
+.breadcrumb{display:flex;align-items:center;gap:7px;font-size:12.5px;min-width:0;}
+.bc-link{color:var(--blue);font-weight:600;cursor:pointer;white-space:nowrap;transition:color .12s;}
+.bc-link:hover{color:var(--navy);}
+.bc-sep{color:var(--g300);font-size:13px;}
+.bc-current{color:var(--g900);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.tb-date{font-size:11.5px;color:var(--g400);padding:4px 11px;background:var(--g100);border-radius:99px;white-space:nowrap;}
+.user-pill{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 13px 5px 5px;border-radius:99px;
+  border:1.5px solid var(--g200);cursor:pointer;transition:border-color .14s;
+}
+.user-pill:hover{border-color:var(--blue);}
+.user-avatar{width:27px;height:27px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;}
+.user-name{font-size:12px;font-weight:600;color:var(--g700);}
+.user-role-text{font-size:10px;color:var(--g400);}
+.tb-btn{display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--r3);font-size:12px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all .14s;border:none;letter-spacing:.1px;white-space:nowrap;}
+.btn-ghost{background:transparent;border:1.5px solid var(--g200);color:var(--g600);}
+.btn-ghost:hover{border-color:var(--g400);color:var(--g900);background:var(--g50);}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(26,79,214,.22);}
+.btn-primary:hover{background:var(--blue2);}
+.btn-danger{background:transparent;border:1.5px solid var(--g200);color:var(--red);}
+.btn-danger:hover{background:var(--rs);border-color:var(--red);}
+#file-input{display:none;}
+
+/* ─── PAGES ─────────────────────────────────── */
+.page{display:none;flex:1;}
+.page.active{display:block;animation:fadeUp .22s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── HOME ──────────────────────────────────── */
+.home-hero{
+  background:linear-gradient(140deg,var(--navy2) 0%,var(--navy) 50%,#1a3a7a 100%);
+  padding:52px 40px 48px;position:relative;overflow:hidden;
+}
+.home-hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 80% at 90% 50%,rgba(59,130,246,.12) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 60% at -10% 50%,rgba(26,79,214,.20) 0%,transparent 55%);
+}
+.home-hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.hero-inner{position:relative;z-index:1;}
+.hero-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:12px;}
+.hero-title{font-size:32px;font-weight:800;color:#fff;line-height:1.15;letter-spacing:-.4px;margin-bottom:8px;}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.52);max-width:500px;line-height:1.7;}
+.hero-kpis{display:flex;margin-top:38px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);overflow:hidden;width:fit-content;}
+.hkpi{padding:17px 30px;border-right:1px solid rgba(255,255,255,.08);}
+.hkpi:last-child{border-right:none;}
+.hkpi-val{font-size:24px;font-weight:800;color:#fff;line-height:1;}
+.hkpi-lbl{font-size:10px;color:rgba(255,255,255,.38);margin-top:4px;text-transform:uppercase;letter-spacing:1.2px;}
+.home-body{padding:36px 40px 56px;}
+.section-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:var(--g400);margin-bottom:20px;}
+
+/* MODULE CARDS */
+.modules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.module-card{
+  background:#fff;border:1.5px solid var(--g200);
+  border-radius:var(--r);padding:26px 24px 22px;
+  cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);
+  box-shadow:var(--sh2);position:relative;overflow:hidden;
+}
+.module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mc,var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .22s cubic-bezier(.4,0,.2,1);}
+.module-card:hover{border-color:var(--mc,var(--blue));box-shadow:var(--sh4);transform:translateY(-2px);}
+.module-card:hover::before{transform:scaleX(1);}
+.mc-icon{width:46px;height:46px;border-radius:11px;background:var(--mc-bg,var(--blue-soft));display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:15px;transition:transform .22s;}
+.module-card:hover .mc-icon{transform:scale(1.07);}
+.mc-title{font-size:14.5px;font-weight:700;color:var(--g900);margin-bottom:6px;line-height:1.3;}
+.mc-desc{font-size:12px;color:var(--g500);line-height:1.65;}
+.mc-footer{margin-top:18px;padding-top:15px;border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;}
+.mc-count{font-size:20px;font-weight:800;color:var(--mc,var(--blue));line-height:1;}
+.mc-count-label{font-size:10px;color:var(--g400);margin-top:2px;}
+.mc-arrow{width:30px;height:30px;border-radius:50%;background:var(--mc-bg,var(--blue-soft));display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--mc,var(--blue));transition:all .18s;}
+.module-card:hover .mc-arrow{background:var(--mc,var(--blue));color:#fff;}
+
+/* ─── DASHBOARD HEADER ──────────────────────── */
+.dash-header{background:#fff;border-bottom:1px solid var(--g200);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.dash-title-row{display:flex;align-items:center;gap:13px;}
+.dash-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.dash-title{font-size:19px;font-weight:800;color:var(--navy);letter-spacing:-.3px;}
+.dash-actions{display:flex;gap:8px;flex-shrink:0;}
+
+/* ─── DASH CONTENT ──────────────────────────── */
+.dash-content{padding:28px 40px 56px;}
+
+/* FILTER BAR */
+.filter-bar{background:#fff;border:1.5px solid var(--g200);border-radius:var(--r);padding:13px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:22px;box-shadow:var(--sh1);}
+.filter-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--g400);flex-shrink:0;}
+.filter-select{background:var(--g50);border:1.5px solid var(--g200);color:var(--g900);padding:6px 11px;border-radius:var(--r3);font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;cursor:pointer;transition:border-color .13s;}
+.filter-select:hover,.filter-select:focus{border-color:var(--blue);}
+.filter-reset{background:none;border:1.5px solid var(--g200);color:var(--g500);padding:6px 11px;border-radius:var(--r3);font-size:11.5px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .13s;}
+.filter-reset:hover{border-color:var(--red);color:var(--red);}
+
+/* KPI CARDS */
+.kpi-row{display:grid;gap:14px;margin-bottom:20px;}
+.kpi-row.cols-4{grid-template-columns:repeat(4,1fr);}
+.kpi-row.cols-5{grid-template-columns:repeat(5,1fr);}
+.kpi-row.cols-3{grid-template-columns:repeat(3,1fr);}
+.kpi{background:#fff;border:1.5px solid var(--g200);border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh1);position:relative;overflow:hidden;transition:box-shadow .15s,border-color .15s;}
+.kpi:hover{box-shadow:var(--sh3);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--blue));}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.kpi-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--g500);}
+.kpi-icon{font-size:19px;opacity:.6;}
+.kpi-value{font-size:31px;font-weight:800;color:var(--kc,var(--navy));line-height:1;letter-spacing:-.5px;}
+.kpi-sub{font-size:11px;color:var(--g400);margin-top:5px;}
+
+/* CHART GRID */
+.chart-grid{display:grid;gap:16px;margin-bottom:16px;}
+.chart-grid.c2{grid-template-columns:1fr 1fr;}
+.chart-grid.c3{grid-template-columns:1fr 1fr 1fr;}
+.chart-grid.c21{grid-template-columns:2fr 1fr;}
+.chart-card{background:#fff;border:1.5px solid var(--g200);border-radius:var(--r);padding:22px 22px 18px;box-shadow:var(--sh1);transition:box-shadow .15s;}
+.chart-card:hover{box-shadow:var(--sh3);}
+.chart-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:16px;display:flex;align-items:center;gap:9px;}
+.chart-title::before{content:'';width:3px;height:14px;background:var(--blue);border-radius:99px;flex-shrink:0;}
+.chart-canvas{position:relative;}
+.h180{height:180px;}.h220{height:220px;}.h260{height:260px;}.h300{height:300px;}
+
+/* SECTION DIVIDER */
+.section-divider{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--g400);margin:28px 0 15px;display:flex;align-items:center;gap:12px;}
+.section-divider::after{content:'';flex:1;height:1.5px;background:var(--g200);}
+
+/* TABLE CARD */
+.table-card{background:#fff;border:1.5px solid var(--g200);border-radius:var(--r);box-shadow:var(--sh1);overflow:hidden;}
+.table-toolbar{padding:14px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.tbar-left{display:flex;align-items:center;gap:10px;}
+.tbar-right{display:flex;align-items:center;gap:8px;}
+.table-title{font-size:14px;font-weight:700;color:var(--g900);}
+.row-count{background:var(--g100);color:var(--g500);font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;}
+.table-search{display:flex;align-items:center;gap:6px;background:var(--g50);border:1.5px solid var(--g200);border-radius:var(--r3);padding:6px 11px;transition:border-color .13s;}
+.table-search:focus-within{border-color:var(--blue);background:#fff;}
+.table-search input{border:none;background:none;outline:none;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--g900);width:190px;}
+.table-search input::placeholder{color:var(--g400);}
+.tbl-wrap{overflow-x:auto;max-height:400px;overflow-y:auto;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+thead th{position:sticky;top:0;z-index:2;background:var(--g50);padding:10px 14px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g500);border-bottom:1.5px solid var(--g200);white-space:nowrap;cursor:pointer;user-select:none;transition:color .13s;}
+thead th:hover{color:var(--blue);}
+tbody tr{border-bottom:1px solid var(--g100);transition:background .1s;}
+tbody tr:hover{background:#f0f7ff;}
+tbody td{padding:10px 14px;color:var(--g700);white-space:nowrap;}
+td.editable{cursor:pointer;}
+td.editable:hover{background:var(--blue-mid);border-radius:4px;}
+td[contenteditable="true"]{outline:2px solid var(--blue);border-radius:4px;background:#fff;padding:7px 10px;color:var(--g900);}
+.add-row-btn{width:100%;padding:11px;text-align:center;cursor:pointer;font-size:12px;font-weight:600;color:var(--blue);background:var(--g50);border:none;border-top:1.5px dashed var(--g200);transition:background .13s;font-family:'Plus Jakarta Sans',sans-serif;}
+.add-row-btn:hover{background:var(--blue-soft);}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--g300);font-size:14px;padding:2px 6px;transition:color .12s;border-radius:4px;}
+.del-btn:hover{color:var(--red);background:var(--rs);}
+
+/* BADGES */
+.badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:10.5px;font-weight:600;white-space:nowrap;}
+.badge-green{background:var(--gs);color:#14532d;}
+.badge-red{background:var(--rs);color:#7f1d1d;}
+.badge-amber{background:var(--as);color:#78350f;}
+.badge-blue{background:var(--blue-soft);color:#1e3a8a;}
+.badge-gray{background:var(--g100);color:var(--g600);}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:80px 40px;}
+.empty-icon{font-size:48px;margin-bottom:16px;}
+.empty-title{font-size:18px;font-weight:700;color:var(--g700);margin-bottom:8px;}
+.empty-sub{font-size:13.5px;color:var(--g500);margin-bottom:26px;line-height:1.65;}
+
+/* TOAST */
+.toast{position:fixed;bottom:26px;right:26px;z-index:9999;background:var(--navy);color:#fff;padding:13px 20px;border-radius:var(--r2);font-size:13px;font-weight:500;box-shadow:var(--sh5);display:flex;align-items:center;gap:9px;transform:translateY(90px);opacity:0;transition:all .28s cubic-bezier(.4,0,.2,1);max-width:380px;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(12,31,74,.42);backdrop-filter:blur(5px);align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:var(--r);padding:34px;width:500px;max-width:93vw;box-shadow:var(--sh5);animation:modalIn .18s cubic-bezier(.4,0,.2,1);}
+@keyframes modalIn{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.modal-title{font-size:18px;font-weight:800;color:var(--navy);}
+.modal-close{background:var(--g100);border:none;border-radius:50%;width:29px;height:29px;cursor:pointer;font-size:14px;color:var(--g500);display:flex;align-items:center;justify-content:center;transition:all .13s;}
+.modal-close:hover{background:var(--g200);color:var(--g900);}
+.modal-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g700);}
+.modal-row:last-child{border-bottom:none;}
+
+/* RESPONSIVE */
+@media(max-width:1120px){.modules-grid{grid-template-columns:repeat(2,1fr);}.kpi-row.cols-4,.kpi-row.cols-5{grid-template-columns:repeat(2,1fr);}.chart-grid.c3,.chart-grid.c21,.chart-grid.c2{grid-template-columns:1fr;}}
+@media(max-width:650px){.home-body,.dash-content{padding-left:18px;padding-right:18px;}.home-hero{padding:36px 18px;}.topbar{padding:0 18px;}.modules-grid{grid-template-columns:1fr;}.kpi-row.cols-3{grid-template-columns:1fr 1fr;}.hero-kpis{flex-wrap:wrap;}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN PAGE ═══════════════ -->
+<div id="login-page">
+  <div class="login-left">
+    <div class="login-logo">
+      <div class="login-mark">LD</div>
+      <div class="login-brand">Licensing Department<span>Roads &amp; Transport Authority · Dubai</span></div>
+    </div>
+    <div class="login-headline">Operations<br/>Management<br/><em>Portal</em></div>
+    <div class="login-sub">A secure centralised dashboard for driver training records, accident data and fleet operations across all depots.</div>
+    <div class="login-stats">
+      <div class="ls-item"><div class="ls-val">100K+</div><div class="ls-lbl">Training Records</div></div>
+      <div class="ls-item"><div class="ls-val">8</div><div class="ls-lbl">Depots</div></div>
+      <div class="ls-item"><div class="ls-val">3K+</div><div class="ls-lbl">Accident Cases</div></div>
+    </div>
+  </div>
+  <div class="login-right">
+    <div class="login-card">
+      <div class="lc-title">Welcome back</div>
+      <div class="lc-sub">Sign in to access your operations dashboard</div>
+      <div class="form-group">
+        <label class="form-label" for="inp-user">Username</label>
+        <input class="form-input" id="inp-user" type="text" placeholder="Enter your username" autocomplete="username"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-pass">Password</label>
+        <div class="pw-wrap">
+          <input class="form-input" id="inp-pass" type="password" placeholder="Enter your password" autocomplete="current-password"/>
+          <button class="pw-eye" type="button" id="pw-eye-btn" onclick="togglePw()">👁</button>
+        </div>
+        <div class="form-error" id="login-error">⚠ Incorrect username or password</div>
+      </div>
+      <button class="login-btn" id="login-submit" onclick="doLogin()">Sign In</button>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ APP ═══════════════ -->
+<div id="app">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-brand" onclick="goHome()">
+      <div class="tb-mark">LD</div>
+      <div class="tb-name">Licensing Dept</div>
+    </div>
+    <div class="tb-divider"></div>
+    <nav class="breadcrumb" id="breadcrumb">
+      <span class="bc-current">Home</span>
+    </nav>
+    <div class="topbar-right">
+      <div class="tb-date" id="tb-date"></div>
+      <input type="file" id="file-input" accept=".csv" multiple/>
+      <button class="tb-btn btn-ghost" id="global-import-btn" onclick="triggerImport(null)">↑ Import CSV</button>
+      <button class="tb-btn btn-ghost" onclick="openSettings()">⚙</button>
+      <div class="user-pill" onclick="openSettings()">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div>
+          <div class="user-name" id="user-name-display">Admin</div>
+          <div class="user-role-text" id="user-role-display">Administrator</div>
+        </div>
+      </div>
+      <button class="tb-btn btn-danger" onclick="doLogout()">↪ Logout</button>
+    </div>
+  </header>
+
+  <!-- ── HOME ── -->
+  <div class="page active" id="page-home">
+    <div class="home-hero">
+      <div class="hero-inner">
+        <div class="hero-eyebrow">RTA · Licensing Department · Dubai</div>
+        <div class="hero-title">Operations Dashboard</div>
+        <div class="hero-sub">Driver training, accident records and fleet management across all depots — in one secure place.</div>
+        <div class="hero-kpis">
+          <div class="hkpi"><div class="hkpi-val" id="home-k1">100,579</div><div class="hkpi-lbl">Training Records</div></div>
+          <div class="hkpi"><div class="hkpi-val" id="home-k2">2,510</div><div class="hkpi-lbl">Bus Accidents</div></div>
+          <div class="hkpi"><div class="hkpi-val" id="home-k3">546</div><div class="hkpi-lbl">Taxi Accidents</div></div>
+          <div class="hkpi"><div class="hkpi-val">8</div><div class="hkpi-lbl">Active Depots</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="home-body">
+      <div class="section-eyebrow">Select a module to open</div>
+      <div class="modules-grid">
+
+        <div class="module-card" style="--mc:#1a4fd6;--mc-bg:#eff6ff" onclick="openModule('inservice')">
+          <div class="mc-icon">🚌</div>
+          <div class="mc-title">Public Bus In-Service &amp; School Bus</div>
+          <div class="mc-desc">Driver training records, attendance tracking, depot performance and course breakdown.</div>
+          <div class="mc-footer">
+            <div><div class="mc-count" id="mc-count-is">100,579</div><div class="mc-count-label">Training records</div></div>
+            <div class="mc-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="module-card" style="--mc:#059669;--mc-bg:#f0fdf4" onclick="openModule('preservice')">
+          <div class="mc-icon">📋</div>
+          <div class="mc-title">Public Bus Pre-Service</div>
+          <div class="mc-desc">Bus &amp; route familiarisation, pre-service onboarding certification records.</div>
+          <div class="mc-footer">
+            <div><div class="mc-count" style="color:#059669">9,314</div><div class="mc-count-label">Familiarisation records</div></div>
+            <div class="mc-arrow" style="background:#f0fdf4;color:#059669">→</div>
+          </div>
+        </div>
+
+        <div class="module-card" style="--mc:#d97706;--mc-bg:#fffbeb" onclick="openModule('taxi')">
+          <div class="mc-icon">🚕</div>
+          <div class="mc-title">Taxi &amp; Limousine Accident</div>
+          <div class="mc-desc">Accident records 2023–2025, severity breakdown, causes and driver conviction data.</div>
+          <div class="mc-footer">
+            <div><div class="mc-count" style="color:#d97706" id="mc-count-tx">546</div><div class="mc-count-label">Accident records</div></div>
+            <div class="mc-arrow" style="background:#fffbeb;color:#d97706">→</div>
+          </div>
+        </div>
+
+        <div class="module-card" style="--mc:#dc2626;--mc-bg:#fef2f2" onclick="openModule('busacc')">
+          <div class="mc-icon">⚠️</div>
+          <div class="mc-title">Public Bus Accident</div>
+          <div class="mc-desc">Depot analysis, preventability, driver fault status and post-accident training compliance.</div>
+          <div class="mc-footer">
+            <div><div class="mc-count" style="color:#dc2626" id="mc-count-ba">2,510</div><div class="mc-count-label">Accident records</div></div>
+            <div class="mc-arrow" style="background:#fef2f2;color:#dc2626">→</div>
+          </div>
+        </div>
+
+        <div class="module-card" style="--mc:#7c3aed;--mc-bg:#f5f3ff" onclick="openModule('recruitment')">
+          <div class="mc-icon">👥</div>
+          <div class="mc-title">Public Bus Recruitment</div>
+          <div class="mc-desc">Driver nationality breakdown, depot allocation and recruitment pipeline management.</div>
+          <div class="mc-footer">
+            <div><div class="mc-count" style="color:#7c3aed">40+</div><div class="mc-count-label">Nationalities on record</div></div>
+            <div class="mc-arrow" style="background:#f5f3ff;color:#7c3aed">→</div>
+          </div>
+        </div>
+
+        <div class="module-card" style="--mc:#0891b2;--mc-bg:#ecfeff" onclick="openModule('custom')">
+          <div class="mc-icon">⚡</div>
+          <div class="mc-title">Custom View</div>
+          <div class="mc-desc">Import any CSV file — charts, filters and a full editable table are built automatically.</div>
+          <div class="mc-footer">
+            <div><div class="mc-count" style="color:#0891b2">Any CSV</div><div class="mc-count-label">Drop any dataset in</div></div>
+            <div class="mc-arrow" style="background:#ecfeff;color:#0891b2">→</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── IN-SERVICE ── -->
+  <div class="page" id="page-inservice">
+    <div class="dash-header">
+      <div class="dash-title-row">
+        <div class="dash-icon" style="background:#eff6ff">🚌</div>
+        <div class="dash-title">In-Service &amp; School Bus Training</div>
+      </div>
+      <div class="dash-actions">
+        <button class="tb-btn btn-ghost" onclick="exportCSV('is')">↓ Export CSV</button>
+        <button class="tb-btn btn-primary" onclick="triggerImport('is')">↑ Import CSV</button>
+      </div>
+    </div>
+    <div class="dash-content">
+      <div class="filter-bar">
+        <span class="filter-label">Filter by</span>
+        <select class="filter-select" id="is-f-year" onchange="renderIS()">
+          <option value="">All Years</option>
+          <option>2023</option><option>2024</option><option>2025</option><option>2026</option>
+        </select>
+        <select class="filter-select" id="is-f-depot" onchange="renderIS()">
+          <option value="">All Depots</option>
+          <option>Al Awir</option><option>Al Khawaneej</option><option>Al Qusais</option>
+          <option>Al Quoz</option><option>Al Ruwayah</option><option>Jebel Ali</option>
+          <option>Etisalat</option><option>School</option>
+        </select>
+        <select class="filter-select" id="is-f-type" onchange="renderIS()">
+          <option value="">All Types</option>
+          <option>Awareness</option><option>School Bus Training</option><option>Refresher</option>
+          <option>Bus Familiarization</option><option>Route Familiarization</option>
+          <option>HSE</option><option>Remedial</option>
+        </select>
+        <select class="filter-select" id="is-f-att" onchange="renderIS()">
+          <option value="">All Attendance</option><option>Present</option><option>Absent</option>
+        </select>
+        <button class="filter-reset" onclick="resetFilters('is')">✕ Reset</button>
+      </div>
+      <div class="kpi-row cols-4">
+        <div class="kpi" style="--kc:var(--blue)"><div class="kpi-top"><div class="kpi-label">Total Records</div><div class="kpi-icon">📊</div></div><div class="kpi-value" id="is-k1">100,579</div><div class="kpi-sub">All depots combined</div></div>
+        <div class="kpi" style="--kc:var(--green)"><div class="kpi-top"><div class="kpi-label">Attendance Rate</div><div class="kpi-icon">✅</div></div><div class="kpi-value" id="is-k2">97.1%</div><div class="kpi-sub" id="is-k2s">97,682 present</div></div>
+        <div class="kpi" style="--kc:var(--red)"><div class="kpi-top"><div class="kpi-label">Absent</div><div class="kpi-icon">❌</div></div><div class="kpi-value" id="is-k3">2,897</div><div class="kpi-sub">Missed sessions</div></div>
+        <div class="kpi" style="--kc:var(--amber)"><div class="kpi-top"><div class="kpi-label">Active Depots</div><div class="kpi-icon">🏢</div></div><div class="kpi-value" id="is-k4">8</div><div class="kpi-sub">Including School Bus</div></div>
+      </div>
+      <div class="chart-grid c21">
+        <div class="chart-card"><div class="chart-title">Monthly Training Volume</div><div class="chart-canvas h260"><canvas id="is-c1"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Training Type Split</div><div class="chart-canvas h260"><canvas id="is-c2"></canvas></div></div>
+      </div>
+      <div class="chart-grid c3">
+        <div class="chart-card"><div class="chart-title">By Depot</div><div class="chart-canvas h220"><canvas id="is-c3"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Attendance Split</div><div class="chart-canvas h220"><canvas id="is-c4"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Top Nationalities</div><div class="chart-canvas h220"><canvas id="is-c5"></canvas></div></div>
+      </div>
+      <div class="section-divider">Training Records Table</div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="tbar-left"><span class="table-title">Training Records</span><span class="row-count" id="is-row-count">100,579 rows</span></div>
+          <div class="tbar-right">
+            <div class="table-search">🔍<input type="text" placeholder="Search name, depot, course…" id="is-search" oninput="searchTable('is-tbody', this.value)"/></div>
+            <button class="tb-btn btn-ghost" id="is-add-btn" onclick="addRow('is')">+ Add Row</button>
+            <button class="tb-btn btn-primary" onclick="exportCSV('is')">↓ Export</button>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th style="width:40px">#</th>
+              <th onclick="sortTable('is-tbody',1)">Date</th>
+              <th onclick="sortTable('is-tbody',2)">Staff ID</th>
+              <th onclick="sortTable('is-tbody',3)">Driver Name</th>
+              <th onclick="sortTable('is-tbody',4)">Nationality</th>
+              <th onclick="sortTable('is-tbody',5)">Depot</th>
+              <th onclick="sortTable('is-tbody',6)">Type</th>
+              <th onclick="sortTable('is-tbody',7)">Course</th>
+              <th onclick="sortTable('is-tbody',8)">Duration</th>
+              <th onclick="sortTable('is-tbody',9)">Trainer</th>
+              <th onclick="sortTable('is-tbody',10)">Attendance</th>
+              <th style="width:44px"></th>
+            </tr></thead>
+            <tbody id="is-tbody"></tbody>
+          </table>
+        </div>
+        <button class="add-row-btn" id="is-add-strip" onclick="addRow('is')">+ Add New Row</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRE-SERVICE ── -->
+  <div class="page" id="page-preservice">
+    <div class="dash-header">
+      <div class="dash-title-row"><div class="dash-icon" style="background:#f0fdf4">📋</div><div class="dash-title">Public Bus Pre-Service</div></div>
+      <div class="dash-actions"><button class="tb-btn btn-ghost" onclick="exportCSV('ps')">↓ Export CSV</button><button class="tb-btn btn-primary" onclick="triggerImport('ps')">↑ Import CSV</button></div>
+    </div>
+    <div class="dash-content">
+      <div class="kpi-row cols-3">
+        <div class="kpi" style="--kc:#059669"><div class="kpi-top"><div class="kpi-label">Bus Familiarisation</div><div class="kpi-icon">🚌</div></div><div class="kpi-value" style="color:#059669">6,137</div><div class="kpi-sub">Records</div></div>
+        <div class="kpi" style="--kc:#059669"><div class="kpi-top"><div class="kpi-label">Route Familiarisation</div><div class="kpi-icon">🗺️</div></div><div class="kpi-value" style="color:#059669">3,168</div><div class="kpi-sub">Records</div></div>
+        <div class="kpi" style="--kc:#059669"><div class="kpi-top"><div class="kpi-label">Tourism Training</div><div class="kpi-icon">🌍</div></div><div class="kpi-value" style="color:#059669">9</div><div class="kpi-sub">Records</div></div>
+      </div>
+      <div class="chart-grid c2">
+        <div class="chart-card"><div class="chart-title">Pre-Service Type Breakdown</div><div class="chart-canvas h260"><canvas id="ps-c1"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">By Depot</div><div class="chart-canvas h260"><canvas id="ps-c2"></canvas></div></div>
+      </div>
+      <div class="section-divider">Pre-Service Records</div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="tbar-left"><span class="table-title">Pre-Service Training</span><span class="row-count" id="ps-row-count">Import CSV to load</span></div>
+          <div class="tbar-right"><div class="table-search">🔍<input type="text" placeholder="Search…" oninput="searchTable('ps-tbody', this.value)"/></div><button class="tb-btn btn-ghost" onclick="addRow('ps')">+ Add Row</button><button class="tb-btn btn-primary" onclick="exportCSV('ps')">↓ Export</button></div>
+        </div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Date</th><th>Staff ID</th><th>Driver Name</th><th>Nationality</th><th>Depot</th><th>Type</th><th>Course</th><th>Trainer</th><th>Attendance</th><th></th></tr></thead><tbody id="ps-tbody"><tr><td colspan="11" style="text-align:center;padding:44px;color:var(--g400)">Import a pre-service CSV file to load records</td></tr></tbody></table></div>
+        <button class="add-row-btn" onclick="addRow('ps')">+ Add New Row</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAXI ── -->
+  <div class="page" id="page-taxi">
+    <div class="dash-header">
+      <div class="dash-title-row"><div class="dash-icon" style="background:#fffbeb">🚕</div><div class="dash-title">Taxi &amp; Limousine Accident 2023–2025</div></div>
+      <div class="dash-actions"><button class="tb-btn btn-ghost" onclick="exportCSV('tx')">↓ Export CSV</button><button class="tb-btn btn-primary" onclick="triggerImport('tx')">↑ Import CSV</button></div>
+    </div>
+    <div class="dash-content">
+      <div class="filter-bar">
+        <span class="filter-label">Filter by</span>
+        <select class="filter-select" id="tx-f-year" onchange="renderTX()"><option value="">All Years</option><option>2023</option><option>2024</option><option>2025</option></select>
+        <select class="filter-select" id="tx-f-sev" onchange="renderTX()"><option value="">All Severities</option><option>Non Injury Case</option><option>Slight</option><option>Medium</option><option>Serious</option><option>*Fatal *</option></select>
+        <select class="filter-select" id="tx-f-nat" onchange="renderTX()"><option value="">All Nationalities</option></select>
+        <button class="filter-reset" onclick="resetFilters('tx')">✕ Reset</button>
+      </div>
+      <div class="kpi-row cols-5">
+        <div class="kpi" style="--kc:var(--blue)"><div class="kpi-top"><div class="kpi-label">Total</div><div class="kpi-icon">🚕</div></div><div class="kpi-value" id="tx-k1">546</div><div class="kpi-sub">All accidents</div></div>
+        <div class="kpi" style="--kc:#7f1d1d"><div class="kpi-top"><div class="kpi-label">Fatal</div><div class="kpi-icon">⛔</div></div><div class="kpi-value" id="tx-k2" style="color:#7f1d1d">12</div><div class="kpi-sub">Fatal cases</div></div>
+        <div class="kpi" style="--kc:var(--red)"><div class="kpi-top"><div class="kpi-label">Serious</div><div class="kpi-icon">🔴</div></div><div class="kpi-value" id="tx-k3">23</div><div class="kpi-sub">Serious injury</div></div>
+        <div class="kpi" style="--kc:var(--amber)"><div class="kpi-top"><div class="kpi-label">Slight / Medium</div><div class="kpi-icon">🟡</div></div><div class="kpi-value" id="tx-k4">326</div><div class="kpi-sub">Minor cases</div></div>
+        <div class="kpi" style="--kc:var(--green)"><div class="kpi-top"><div class="kpi-label">Non-Injury</div><div class="kpi-icon">🟢</div></div><div class="kpi-value" id="tx-k5">185</div><div class="kpi-sub">Property damage only</div></div>
+      </div>
+      <div class="chart-grid c21">
+        <div class="chart-card"><div class="chart-title">Monthly Trend — 2023 vs 2024 vs 2025</div><div class="chart-canvas h300"><canvas id="tx-c1"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Severity Breakdown</div><div class="chart-canvas h300"><canvas id="tx-c2"></canvas></div></div>
+      </div>
+      <div class="chart-grid c3">
+        <div class="chart-card"><div class="chart-title">Top Primary Causes</div><div class="chart-canvas h220"><canvas id="tx-c3"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Collision Type</div><div class="chart-canvas h220"><canvas id="tx-c4"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Driver Nationality</div><div class="chart-canvas h220"><canvas id="tx-c5"></canvas></div></div>
+      </div>
+      <div class="section-divider">Accident Records</div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="tbar-left"><span class="table-title">Taxi Accidents</span><span class="row-count" id="tx-row-count">Import CSV to load full records</span></div>
+          <div class="tbar-right"><div class="table-search">🔍<input type="text" placeholder="Search…" oninput="searchTable('tx-tbody', this.value)"/></div><button class="tb-btn btn-ghost" onclick="addRow('tx')">+ Add Row</button><button class="tb-btn btn-primary" onclick="exportCSV('tx')">↓ Export</button></div>
+        </div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Date</th><th>Time</th><th>Severity</th><th>Primary Cause</th><th>Collision</th><th>Location</th><th>Age</th><th>Nationality</th><th>Experience</th><th>Convicted</th><th></th></tr></thead><tbody id="tx-tbody"><tr><td colspan="12" style="text-align:center;padding:44px;color:var(--g400)">Import the Taxi Accident CSV file to view all records</td></tr></tbody></table></div>
+        <button class="add-row-btn" onclick="addRow('tx')">+ Add New Row</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BUS ACCIDENT ── -->
+  <div class="page" id="page-busacc">
+    <div class="dash-header">
+      <div class="dash-title-row"><div class="dash-icon" style="background:#fef2f2">⚠️</div><div class="dash-title">Public Bus Accident</div></div>
+      <div class="dash-actions"><button class="tb-btn btn-ghost" onclick="exportCSV('ba')">↓ Export CSV</button><button class="tb-btn btn-primary" onclick="triggerImport('ba')">↑ Import CSV</button></div>
+    </div>
+    <div class="dash-content">
+      <div class="filter-bar">
+        <span class="filter-label">Filter by</span>
+        <select class="filter-select" id="ba-f-depot" onchange="renderBA()"><option value="">All Depots</option><option>Al Awir Depot</option><option>Al Quoz Depot</option><option>Al Qusais Depot</option><option>Al Ruwayah Depot</option><option>Al Khawaneej Depot</option><option>Jebel Ali Depot</option><option>Etisalat Depot</option></select>
+        <select class="filter-select" id="ba-f-cat" onchange="renderBA()"><option value="">All Categories</option><option>Minor</option><option>Moderate</option><option>Major</option></select>
+        <select class="filter-select" id="ba-f-prev" onchange="renderBA()"><option value="">Preventable — All</option><option>Yes</option><option>No</option></select>
+        <button class="filter-reset" onclick="resetFilters('ba')">✕ Reset</button>
+      </div>
+      <div class="kpi-row cols-4">
+        <div class="kpi" style="--kc:var(--blue)"><div class="kpi-top"><div class="kpi-label">Total Accidents</div><div class="kpi-icon">🚌</div></div><div class="kpi-value" id="ba-k1">2,510</div><div class="kpi-sub">All depots</div></div>
+        <div class="kpi" style="--kc:var(--red)"><div class="kpi-top"><div class="kpi-label">Preventable</div><div class="kpi-icon">⚠️</div></div><div class="kpi-value" id="ba-k2">875</div><div class="kpi-sub" id="ba-k2s">34.9% of total</div></div>
+        <div class="kpi" style="--kc:var(--amber)"><div class="kpi-top"><div class="kpi-label">Driver at Fault</div><div class="kpi-icon">🚦</div></div><div class="kpi-value" id="ba-k3">536</div><div class="kpi-sub">Confirmed fault</div></div>
+        <div class="kpi" style="--kc:var(--green)"><div class="kpi-top"><div class="kpi-label">Training Done</div><div class="kpi-icon">📚</div></div><div class="kpi-value" id="ba-k4">512</div><div class="kpi-sub">Post-accident training</div></div>
+      </div>
+      <div class="chart-grid c21">
+        <div class="chart-card"><div class="chart-title">Monthly Accident Trend</div><div class="chart-canvas h260"><canvas id="ba-c1"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Accident Category</div><div class="chart-canvas h260"><canvas id="ba-c2"></canvas></div></div>
+      </div>
+      <div class="chart-grid c3">
+        <div class="chart-card"><div class="chart-title">By Depot</div><div class="chart-canvas h220"><canvas id="ba-c3"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Preventable vs Not</div><div class="chart-canvas h220"><canvas id="ba-c4"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Bus Type Involved</div><div class="chart-canvas h220"><canvas id="ba-c5"></canvas></div></div>
+      </div>
+      <div class="section-divider">Accident Records</div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="tbar-left"><span class="table-title">Bus Accidents</span><span class="row-count" id="ba-row-count">Import CSV to load full records</span></div>
+          <div class="tbar-right"><div class="table-search">🔍<input type="text" placeholder="Search…" oninput="searchTable('ba-tbody', this.value)"/></div><button class="tb-btn btn-ghost" onclick="addRow('ba')">+ Add Row</button><button class="tb-btn btn-primary" onclick="exportCSV('ba')">↓ Export</button></div>
+        </div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Date</th><th>Driver Name</th><th>Nationality</th><th>Depot</th><th>Category</th><th>Bus Type</th><th>Route</th><th>Preventable</th><th>Status</th><th>Training</th><th></th></tr></thead><tbody id="ba-tbody"><tr><td colspan="12" style="text-align:center;padding:44px;color:var(--g400)">Import the Public Bus Accident CSV file to view all records</td></tr></tbody></table></div>
+        <button class="add-row-btn" onclick="addRow('ba')">+ Add New Row</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RECRUITMENT ── -->
+  <div class="page" id="page-recruitment">
+    <div class="dash-header">
+      <div class="dash-title-row"><div class="dash-icon" style="background:#f5f3ff">👥</div><div class="dash-title">Public Bus Recruitment</div></div>
+      <div class="dash-actions"><button class="tb-btn btn-ghost" onclick="exportCSV('rc')">↓ Export CSV</button><button class="tb-btn btn-primary" onclick="triggerImport('rc')">↑ Import CSV</button></div>
+    </div>
+    <div class="dash-content">
+      <div class="kpi-row cols-3">
+        <div class="kpi" style="--kc:#7c3aed"><div class="kpi-top"><div class="kpi-label">Total Drivers</div><div class="kpi-icon">👥</div></div><div class="kpi-value" style="color:#7c3aed">103,635</div><div class="kpi-sub">All datasets combined</div></div>
+        <div class="kpi" style="--kc:#7c3aed"><div class="kpi-top"><div class="kpi-label">Top Nationality</div><div class="kpi-icon">🌍</div></div><div class="kpi-value" style="color:#7c3aed;font-size:18px;padding-top:4px">Pakistan</div><div class="kpi-sub">44,464 training records</div></div>
+        <div class="kpi" style="--kc:#7c3aed"><div class="kpi-top"><div class="kpi-label">Nationalities</div><div class="kpi-icon">🗺️</div></div><div class="kpi-value" style="color:#7c3aed">40+</div><div class="kpi-sub">Diverse workforce</div></div>
+      </div>
+      <div class="chart-grid c2">
+        <div class="chart-card"><div class="chart-title">Nationality Distribution (Top 10)</div><div class="chart-canvas h280"><canvas id="rc-c1"></canvas></div></div>
+        <div class="chart-card"><div class="chart-title">Training Records by Depot</div><div class="chart-canvas h280"><canvas id="rc-c2"></canvas></div></div>
+      </div>
+      <div class="section-divider">Recruitment Records</div>
+      <div class="table-card">
+        <div class="table-toolbar">
+          <div class="tbar-left"><span class="table-title">Recruitment Data</span><span class="row-count" id="rc-row-count">Import CSV to load</span></div>
+          <div class="tbar-right"><div class="table-search">🔍<input type="text" placeholder="Search…" oninput="searchTable('rc-tbody', this.value)"/></div><button class="tb-btn btn-ghost" onclick="addRow('rc')">+ Add Row</button><button class="tb-btn btn-primary" onclick="exportCSV('rc')">↓ Export</button></div>
+        </div>
+        <div class="tbl-wrap"><table><thead><tr><th>#</th><th>Staff ID</th><th>Name</th><th>Nationality</th><th>Depot</th><th>Hire Date</th><th>Status</th><th></th></tr></thead><tbody id="rc-tbody"><tr><td colspan="8" style="text-align:center;padding:44px;color:var(--g400)">Import a recruitment CSV file to load records</td></tr></tbody></table></div>
+        <button class="add-row-btn" onclick="addRow('rc')">+ Add New Row</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CUSTOM VIEW ── -->
+  <div class="page" id="page-custom">
+    <div class="dash-header">
+      <div class="dash-title-row"><div class="dash-icon" style="background:#ecfeff">⚡</div><div class="dash-title">Custom View</div></div>
+      <div class="dash-actions"><button class="tb-btn btn-ghost" id="cu-export-btn" style="display:none" onclick="exportCSV('cu')">↓ Export CSV</button><button class="tb-btn btn-primary" onclick="triggerImport('cu')">↑ Import CSV</button></div>
+    </div>
+    <div class="dash-content">
+      <div id="custom-empty" class="empty-state">
+        <div class="empty-icon">📂</div>
+        <div class="empty-title">Import any CSV file</div>
+        <div class="empty-sub">Charts, KPI cards and a fully editable table<br/>will be generated automatically from your data.</div>
+        <button class="tb-btn btn-primary" style="margin:0 auto" onclick="triggerImport('cu')">↑ Import CSV File</button>
+      </div>
+      <div id="custom-content" style="display:none">
+        <div class="kpi-row cols-4" id="cu-kpis"></div>
+        <div class="chart-grid c2">
+          <div class="chart-card"><div class="chart-title" id="cu-chart1-title">Column 1</div><div class="chart-canvas h260"><canvas id="cu-c1"></canvas></div></div>
+          <div class="chart-card"><div class="chart-title" id="cu-chart2-title">Column 2</div><div class="chart-canvas h260"><canvas id="cu-c2"></canvas></div></div>
+        </div>
+        <div class="section-divider">Imported Data</div>
+        <div class="table-card">
+          <div class="table-toolbar">
+            <div class="tbar-left"><span class="table-title" id="cu-table-title">Custom Data</span><span class="row-count" id="cu-row-count">0 rows</span></div>
+            <div class="tbar-right"><div class="table-search">🔍<input type="text" placeholder="Search…" oninput="searchTable('cu-tbody', this.value)"/></div><button class="tb-btn btn-primary" onclick="exportCSV('cu')">↓ Export</button></div>
+          </div>
+          <div class="tbl-wrap"><table id="cu-table"><thead id="cu-thead"></thead><tbody id="cu-tbody"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal-box" style="width:640px;max-width:95vw;">
+    <div class="modal-head">
+      <div class="modal-title">⚙ Settings</div>
+      <button class="modal-close" onclick="closeSettings()">✕</button>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:0;border-bottom:1.5px solid var(--g200);margin-bottom:22px;">
+      <button class="set-tab active" id="tab-general" onclick="switchTab('general')">General</button>
+      <button class="set-tab" id="tab-users" onclick="switchTab('users')">👥 User Management</button>
+    </div>
+
+    <!-- General Tab -->
+    <div id="tab-content-general">
+      <div class="modal-row"><span>Logged in as</span><strong id="settings-user">Admin</strong></div>
+      <div class="modal-row"><span>Role</span><span id="settings-role" style="color:var(--blue);font-weight:600">Administrator</span></div>
+      <div class="modal-row"><span>Department</span><span>RTA Licensing</span></div>
+      <div class="modal-row"><span>Max rows shown per table</span>
+        <select class="filter-select" id="rows-per-page"><option value="200">200</option><option value="500">500</option><option value="1000">1000</option></select>
+      </div>
+      <div class="modal-row"><span>Export includes all rows</span><span style="color:var(--green);font-weight:600">✓ Always</span></div>
+      <div style="margin-top:22px;display:flex;gap:8px;justify-content:flex-end">
+        <button class="tb-btn btn-ghost" onclick="closeSettings()">Cancel</button>
+        <button class="tb-btn btn-primary" onclick="closeSettings();showToast('Settings saved')">Save</button>
+      </div>
+    </div>
+
+    <!-- User Management Tab -->
+    <div id="tab-content-users" style="display:none">
+      <div id="um-admin-only" style="display:none">
+        <!-- Add User -->
+        <div style="background:var(--g50);border:1.5px solid var(--g200);border-radius:var(--r2);padding:16px 18px;margin-bottom:18px;">
+          <div style="font-size:12px;font-weight:700;color:var(--g700);margin-bottom:12px;letter-spacing:.2px;">Add New User</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px;">Username</div>
+              <input class="form-input" id="um-new-user" placeholder="e.g. ahmed" style="padding:8px 11px;font-size:12.5px;"/>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px;">Password</div>
+              <input class="form-input" id="um-new-pass" type="password" placeholder="Min 6 characters" style="padding:8px 11px;font-size:12.5px;"/>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px;">Role</div>
+              <select class="filter-select" id="um-new-role" style="width:100%;padding:8px 11px;">
+                <option value="Administrator">Administrator</option>
+                <option value="Manager">Manager</option>
+                <option value="Viewer">Viewer</option>
+              </select>
+            </div>
+            <button class="tb-btn btn-primary" style="height:36px;white-space:nowrap" onclick="addUser()">+ Add</button>
+          </div>
+          <div style="font-size:11px;color:var(--red);margin-top:6px;display:none" id="um-error">⚠ Please fill in all fields (min 6 chars for password)</div>
+        </div>
+
+        <!-- User Table -->
+        <div style="font-size:12px;font-weight:700;color:var(--g700);margin-bottom:10px;">Active Users</div>
+        <div style="border:1.5px solid var(--g200);border-radius:var(--r2);overflow:hidden;">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+            <thead>
+              <tr style="background:var(--g50);border-bottom:1.5px solid var(--g200);">
+                <th style="padding:9px 14px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g500);">Username</th>
+                <th style="padding:9px 14px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g500);">Role</th>
+                <th style="padding:9px 14px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--g500);">Password</th>
+                <th style="padding:9px 14px;width:120px;"></th>
+              </tr>
+            </thead>
+            <tbody id="um-user-list"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Non-admin message -->
+      <div id="um-no-access" style="display:none;text-align:center;padding:40px 20px;">
+        <div style="font-size:36px;margin-bottom:12px">🔒</div>
+        <div style="font-size:15px;font-weight:700;color:var(--g700);margin-bottom:6px">Admin Only</div>
+        <div style="font-size:13px;color:var(--g500)">User management is only available to Administrators.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast-el">✓ <span id="toast-msg"></span></div>
+
+<script>
+'use strict';
+
+/* ── AUTH ─────────────────────────────────────── */
+const USERS = {
+  admin:   { pass:'admin123', role:'Administrator', initials:'AD' },
+  manager: { pass:'mgr2025',  role:'Manager',       initials:'MG' },
+  viewer:  { pass:'view2025', role:'Viewer',         initials:'VW' }
+};
+let SESSION = null;
+
+
+
+function togglePw() {
+  const i = $('inp-pass'), b = $('pw-eye-btn');
+  i.type = i.type === 'password' ? 'text' : 'password';
+  b.textContent = i.type === 'password' ? '👁' : '🙈';
+}
+
+function doLogin() {
+  const u = $('inp-user').value.trim().toLowerCase();
+  const p = $('inp-pass').value;
+  const errEl = $('login-error');
+  errEl.classList.remove('visible');
+  if (!USERS[u] || USERS[u].pass !== p) {
+    errEl.classList.add('visible');
+    ['inp-user','inp-pass'].forEach(id => $(id).classList.add('error'));
+    $('inp-pass').value = '';
+    return;
+  }
+  SESSION = { username: u, ...USERS[u] };
+  const btn = $('login-submit');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  setTimeout(() => {
+    $('login-page').style.display = 'none';
+    $('app').classList.add('visible');
+    const display = u.charAt(0).toUpperCase() + u.slice(1);
+    $('user-name-display').textContent = display;
+    $('user-role-display').textContent = SESSION.role;
+    $('user-avatar').textContent = SESSION.initials;
+    $('settings-user').textContent = display;
+    $('settings-role').textContent = SESSION.role;
+    // Viewer: hide edit controls
+    if (u === 'viewer') {
+      document.querySelectorAll('[id$="-add-btn"],[id$="-add-strip"],.add-row-btn').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('[onclick*="triggerImport"]').forEach(el => { if(el.id !== 'global-import-btn') el.style.display = 'none'; });
+    }
+    showToast('Welcome back, ' + display);
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }, 550);
+}
+
+function doLogout() {
+  if (!confirm('Sign out of the dashboard?')) return;
+  SESSION = null;
+  $('app').classList.remove('visible');
+  $('login-page').style.display = 'flex';
+  $('inp-user').value = ''; $('inp-pass').value = '';
+  showPage('home');
+  setBreadcrumb([{ label: 'Home' }]);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && $('login-page').style.display !== 'none') doLogin();
+});
+
+/* ── CHART ENGINE ─────────────────────────────── */
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#f1f5f9';
+
+const BLUE_P = ['#1a4fd6','#2563eb','#3b82f6','#60a5fa','#93c5fd','#bfdbfe','#0c1f4a','#1e3a8a'];
+const MIX_P  = ['#1a4fd6','#059669','#d97706','#dc2626','#7c3aed','#0891b2','#0c1f4a','#65a30d'];
+const chartRegistry = {};
+
+function makeChart(id, type, labels, data, opts = {}) {
+  if (chartRegistry[id]) chartRegistry[id].destroy();
+  const el = $(id); if (!el) return;
+  const isDoughnut = type === 'doughnut' || type === 'pie';
+  const colors = opts.colors || (isDoughnut ? MIX_P : BLUE_P);
+  const datasets = opts.datasets || [{
+    label: opts.label || '',
+    data,
+    backgroundColor: isDoughnut ? colors : (type === 'line' ? 'rgba(26,79,214,.08)' : colors),
+    borderColor: type === 'line' ? '#1a4fd6' : (isDoughnut ? colors : colors.map(c => c + 'cc')),
+    borderWidth: type === 'line' ? 2 : 1,
+    fill: type === 'line', tension: .4,
+    pointRadius: type === 'line' ? 2 : 0,
+    pointHoverRadius: type === 'line' ? 5 : 0,
+    borderRadius: type === 'bar' ? 5 : 0,
+  }];
+  chartRegistry[id] = new Chart(el, {
+    type,
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      animation: { duration: 450, easing: 'easeInOutQuart' },
+      plugins: {
+        legend: { display: isDoughnut || !!opts.legend, position: 'bottom', labels: { boxWidth: 9, padding: 12, color: '#64748b', font: { size: 10.5 } } },
+        tooltip: { backgroundColor: '#0c1f4a', titleColor: '#fff', bodyColor: 'rgba(255,255,255,.72)', borderColor: '#1a4fd6', borderWidth: 1, padding: 11, cornerRadius: 9 }
+      },
+      scales: isDoughnut ? {} : {
+        x: { grid: { color: '#f8fafc' }, ticks: { maxRotation: 45, font: { size: 10.5 } } },
+        y: { grid: { color: '#f1f5f9' }, beginAtZero: true }
+      },
+      ...(opts.extra || {})
+    }
+  });
+  return chartRegistry[id];
+}
+
+/* ── DATA STORE ───────────────────────────────── */
+const DB = { is: [], tx: [], ba: [], ps: [], rc: [], cu: [] };
+
+const SUMMARY = {
+  is_depot: { 'Al Awir':20826,'Al Khawaneej':6679,'Al Qusais':9860,'Al Quoz':11120,'Al Ruwayah':13228,'Jebel Ali':7656,'Etisalat':132,'School':31069 },
+  is_type:  { 'Awareness':46107,'School Bus Training':31069,'Refresher':5928,'Bus Familiarisation':6137,'Route Familiarisation':3168,'HSE':5856,'Remedial':2305,'Tourism':9 },
+  is_att:   { 'Present':97682,'Absent':2897 },
+  is_nat:   { 'Pakistan':44464,'India':36784,'Philippines':4869,'Sri Lanka':3243,'Nepal':3153,'Egypt':3102,'Sudan':1828,'Bangladesh':993,'Kenya':700 },
+  is_trend: { '2023-01':1407,'2023-02':1175,'2023-03':1360,'2023-04':1483,'2023-05':1634,'2023-06':1163,'2023-07':1962,'2023-08':4149,'2023-09':3214,'2023-10':6265,'2023-11':5782,'2023-12':5506,'2024-01':5953,'2024-02':2853,'2024-03':3954,'2024-04':2664,'2024-05':3429,'2024-06':2503,'2024-07':5519,'2024-08':4119,'2024-09':1912,'2024-10':1553,'2024-11':1077,'2024-12':1684,'2025-01':2210,'2025-02':2068,'2025-03':1828,'2025-04':2707,'2025-05':1831,'2025-06':2724,'2025-07':3002,'2025-08':2189,'2025-09':1573,'2025-10':1141,'2025-11':1020,'2025-12':908,'2026-01':1733,'2026-02':3325 },
+  tx_sev:   { 'Non Injury Case':185,'Slight':177,'Medium':149,'Serious':23,'*Fatal *':12 },
+  tx_cause: { 'Driving Too Close':165,'Sudden Manouvers':94,'Influence Of Alcohol':53,'Unsafe Entry To Road':45,'Lack Of Consideration':43,'Lack Of Lane Discipline':38,'Violating Red Signals':36,'Driving Without Due Care':31,'Driving Against Traffic':10,'Dangerous Turning':9 },
+  tx_coll:  { 'Head To Tail':239,'Side To Side':180,'Pedestrian':53,'Head To Side':42,'Head On':14,'Turning':8,'Stationary':7,'Other':3 },
+  tx_nat:   { 'Pakistan':245,'Bangladesh':133,'Unknown':60,'Other':56,'India':39,'Egypt':6,'Sudan':3,'Iran':1 },
+  tx_yr:    { '2023':{'Jan':14,'Feb':19,'Mar':17,'Apr':9,'May':17,'Jun':10,'Jul':14,'Aug':18,'Sep':12,'Oct':13,'Nov':17,'Dec':16},'2024':{'Jan':12,'Feb':16,'Mar':16,'Apr':19,'May':16,'Jun':12,'Jul':12,'Aug':19,'Sep':14,'Oct':18,'Nov':16,'Dec':16},'2025':{'Jan':8,'Feb':12,'Mar':15,'Apr':18,'May':27,'Jun':18,'Jul':11,'Aug':8,'Sep':22,'Oct':17,'Nov':11,'Dec':17} },
+  ba_cat:   { 'Minor':2437,'Moderate':65,'Major':8 },
+  ba_depot: { 'Al Awir Depot':545,'Al Quoz Depot':577,'Al Qusais Depot':332,'Al Ruwayah Depot':425,'Al Khawaneej Depot':268,'Jebel Ali Depot':290,'Etisalat Depot':73 },
+  ba_prev:  { 'Not Preventable':1635,'Preventable':875 },
+  ba_bus:   { 'Standard':1733,'Double Decker':259,'Articulated':214,'Volvo Coach':176,'MIDI':128 },
+  ba_trend: { '2025-01':157,'2025-02':135,'2025-03':151,'2025-04':230,'2025-05':228,'2025-06':214,'2025-07':222,'2025-08':225,'2025-09':245,'2025-10':274,'2025-11':237,'2025-12':192 }
+};
+
+/* ── RENDER: IN-SERVICE ───────────────────────── */
+function renderIS() {
+  const fy = val('is-f-year'), fd = val('is-f-depot'), ft = val('is-f-type'), fa = val('is-f-att');
+  let depot, type, att, nat, trend, total, present, absent;
+  if (DB.is.length) {
+    let f = DB.is;
+    if (fy) f = f.filter(r => (r['Training Date']||'').includes(fy));
+    if (fd) f = f.filter(r => (r['Depot']||'').trim() === fd);
+    if (ft) f = f.filter(r => (r['Type of Training']||'').trim() === ft);
+    if (fa) f = f.filter(r => (r['Attendance']||'').trim() === fa);
+    total = f.length; present = f.filter(r => r['Attendance'] === 'Present').length; absent = total - present;
+    depot = countBy(f,'Depot'); type = countBy(f,'Type of Training');
+    att = countBy(f,'Attendance'); nat = topN(countBy(f,'Nationality'), 9);
+    trend = buildTrend(f, 'Training Date');
+    renderTableIS(f);
+  } else {
+    total=100579; present=97682; absent=2897;
+    depot={...SUMMARY.is_depot}; type={...SUMMARY.is_type}; att={...SUMMARY.is_att};
+    nat={...SUMMARY.is_nat}; trend={...SUMMARY.is_trend};
+    renderTableIS([]);
+  }
+  setText('is-k1', total.toLocaleString());
+  setText('is-k2', total ? ((present/total)*100).toFixed(1)+'%' : '—');
+  setText('is-k2s', present.toLocaleString()+' present');
+  setText('is-k3', absent.toLocaleString());
+  setText('is-k4', Object.keys(depot).length);
+  makeChart('is-c1','line',Object.keys(trend),Object.values(trend),{label:'Sessions'});
+  makeChart('is-c2','doughnut',Object.keys(type),Object.values(type));
+  makeChart('is-c3','bar',Object.keys(depot),Object.values(depot));
+  makeChart('is-c4','doughnut',Object.keys(att),Object.values(att),{colors:['#16a34a','#dc2626']});
+  makeChart('is-c5','bar',Object.keys(nat),Object.values(nat),{extra:{indexAxis:'y'}});
+}
+
+function renderTableIS(rows) {
+  const max = parseInt(val('rows-per-page') || '200');
+  setText('is-row-count', (rows.length || '100,579') + ' rows');
+  const tb = $('is-tbody');
+  if (!rows.length) { tb.innerHTML = '<tr><td colspan="12" style="text-align:center;padding:44px;color:var(--g400)">Import the In-Service CSV file to view full records</td></tr>'; return; }
+  const sevC = { 'Present':'badge-green', 'Absent':'badge-red' };
+  tb.innerHTML = rows.slice(0, max).map((r,i) => `
+    <tr>
+      <td style="color:var(--g300)">${i+1}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Training Date']||''}</td>
+      <td>${r['Staff ID']||''}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Driver Name']||''}</td>
+      <td>${r['Nationality']||''}</td>
+      <td>${r['Depot']||''}</td>
+      <td>${r['Type of Training']||''}</td>
+      <td class="editable" ondblclick="editCell(this)">${(r['Training Course Name']||'').substring(0,28)}</td>
+      <td>${r['Duration']||''}</td>
+      <td>${r['Trainer']||''}</td>
+      <td><span class="badge ${sevC[r['Attendance']]||'badge-gray'}">${r['Attendance']||''}</span></td>
+      <td><button class="del-btn" onclick="deleteRow(this)">✕</button></td>
+    </tr>`).join('');
+}
+
+/* ── RENDER: TAXI ─────────────────────────────── */
+function renderTX() {
+  const fy = val('tx-f-year'), fs = val('tx-f-sev'), fn = val('tx-f-nat');
+  let sev, cause, coll, nat, total, fatal, serious, slightMed, nonInj;
+  if (DB.tx.length) {
+    let f = DB.tx;
+    if (fy) f = f.filter(r => r['Year'] === fy);
+    if (fs) f = f.filter(r => (r['Severity of Accident']||'') === fs);
+    if (fn) f = f.filter(r => (r['Nationality of the driver']||'') === fn);
+    total = f.length;
+    sev = countBy(f,'Severity of Accident'); cause = topN(countBy(f,'Primary Cause of Accident'),10);
+    coll = countBy(f,'Collision Type'); nat = topN(countBy(f,'Nationality of the driver'),8);
+    fatal = sev['*Fatal *']||0; serious = sev['Serious']||0;
+    slightMed = (sev['Slight']||0)+(sev['Medium']||0); nonInj = sev['Non Injury Case']||0;
+    renderTableTX(f);
+  } else {
+    total=546; sev={...SUMMARY.tx_sev}; cause={...SUMMARY.tx_cause};
+    coll={...SUMMARY.tx_coll}; nat={...SUMMARY.tx_nat};
+    fatal=12; serious=23; slightMed=326; nonInj=185;
+  }
+  setText('tx-k1', total.toLocaleString()); setText('tx-k2', fatal);
+  setText('tx-k3', serious); setText('tx-k4', slightMed); setText('tx-k5', nonInj);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  if (chartRegistry['tx-c1']) chartRegistry['tx-c1'].destroy();
+  chartRegistry['tx-c1'] = new Chart($('tx-c1'), { type:'line',
+    data:{ labels:months, datasets:[
+      {label:'2023',data:Object.values(SUMMARY.tx_yr['2023']),borderColor:'#1a4fd6',backgroundColor:'transparent',tension:.4,pointRadius:2},
+      {label:'2024',data:Object.values(SUMMARY.tx_yr['2024']),borderColor:'#d97706',backgroundColor:'transparent',tension:.4,pointRadius:2},
+      {label:'2025',data:Object.values(SUMMARY.tx_yr['2025']),borderColor:'#059669',backgroundColor:'transparent',tension:.4,pointRadius:2}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, animation:{duration:450},
+      plugins:{ legend:{display:true,position:'top',labels:{boxWidth:9,padding:12,font:{size:10.5}}},
+        tooltip:{backgroundColor:'#0c1f4a',borderColor:'#1a4fd6',borderWidth:1,padding:11}},
+      scales:{ x:{grid:{color:'#f8fafc'}}, y:{grid:{color:'#f1f5f9'},beginAtZero:true} } }
+  });
+  makeChart('tx-c2','doughnut',Object.keys(sev),Object.values(sev),{colors:['#16a34a','#65a30d','#d97706','#dc2626','#7f1d1d']});
+  makeChart('tx-c3','bar',Object.keys(cause),Object.values(cause),{extra:{indexAxis:'y'}});
+  makeChart('tx-c4','doughnut',Object.keys(coll),Object.values(coll));
+  makeChart('tx-c5','bar',Object.keys(nat),Object.values(nat),{extra:{indexAxis:'y'}});
+}
+
+function renderTableTX(rows) {
+  const max = parseInt(val('rows-per-page') || '200');
+  setText('tx-row-count', rows.length + ' rows');
+  const tb = $('tx-tbody');
+  if (!rows.length) { tb.innerHTML = '<tr><td colspan="12" style="text-align:center;padding:44px;color:var(--g400)">Import the Taxi Accident CSV file to view all records</td></tr>'; return; }
+  const sC = {'Non Injury Case':'badge-green','Slight':'badge-blue','Medium':'badge-amber','Serious':'badge-red','*Fatal *':'badge-red'};
+  tb.innerHTML = rows.slice(0, max).map((r,i) => `
+    <tr>
+      <td style="color:var(--g300)">${i+1}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Date of Accident']||''}</td>
+      <td>${r['Time_HHMM']||''}</td>
+      <td><span class="badge ${sC[r['Severity of Accident']]||'badge-gray'}">${r['Severity of Accident']||'—'}</span></td>
+      <td class="editable" ondblclick="editCell(this)">${r['Primary Cause of Accident']||''}</td>
+      <td>${r['Collision Type']||''}</td>
+      <td>${(r['Location of Accident']||'').substring(0,26)}</td>
+      <td>${r['Age of the driver']||''}</td>
+      <td>${r['Nationality of the driver']||''}</td>
+      <td>${r['Experience_Group']||''}</td>
+      <td><span class="badge ${r['Convicted(Y/N)']=='Y'?'badge-red':'badge-green'}">${r['Convicted(Y/N)']||'N'}</span></td>
+      <td><button class="del-btn" onclick="deleteRow(this)">✕</button></td>
+    </tr>`).join('');
+}
+
+/* ── RENDER: BUS ACCIDENT ─────────────────────── */
+function renderBA() {
+  const fd = val('ba-f-depot'), fc = val('ba-f-cat'), fp = val('ba-f-prev');
+  let cat, depot, prev, bustype, trend, total, prevY, fault, train;
+  if (DB.ba.length) {
+    let f = DB.ba;
+    if (fd) f = f.filter(r => (r['Depot']||'').includes(fd.replace(' Depot','')));
+    if (fc) f = f.filter(r => (r['Accident Category']||'') === fc);
+    if (fp) f = f.filter(r => (r['Is Preventable']||'') === fp);
+    total = f.length; cat = countBy(f,'Accident Category'); depot = countBy(f,'Depot');
+    const statuses = countBy(f,'Accident Status');
+    fault = (statuses['Driver fault']||0)+(statuses['Court case']||0);
+    prev = countBy(f,'Is Preventable'); prevY = prev['Yes']||0;
+    train = countBy(f,'Training Status')['Attend Training']||0;
+    bustype = countBy(f,'Bus Type'); trend = buildTrend(f,'Accident Date');
+    renderTableBA(f);
+  } else {
+    total=2510; cat={...SUMMARY.ba_cat}; depot={...SUMMARY.ba_depot};
+    prev={...SUMMARY.ba_prev}; bustype={...SUMMARY.ba_bus}; trend={...SUMMARY.ba_trend};
+    prevY=875; fault=536; train=512;
+  }
+  setText('ba-k1',total.toLocaleString()); setText('ba-k2',prevY.toLocaleString());
+  setText('ba-k2s', total ? ((prevY/total)*100).toFixed(1)+'% of total' : '—');
+  setText('ba-k3',fault.toLocaleString()); setText('ba-k4',train.toLocaleString());
+  makeChart('ba-c1','line',Object.keys(trend),Object.values(trend),{label:'Accidents'});
+  makeChart('ba-c2','doughnut',Object.keys(cat),Object.values(cat),{colors:['#3b82f6','#d97706','#dc2626']});
+  makeChart('ba-c3','bar',Object.keys(depot),Object.values(depot));
+  makeChart('ba-c4','doughnut',['Not Preventable','Preventable'],[prev['Not Preventable']||1635, prev['Preventable']||875],{colors:['#16a34a','#dc2626']});
+  makeChart('ba-c5','bar',Object.keys(bustype),Object.values(bustype));
+}
+
+function renderTableBA(rows) {
+  const max = parseInt(val('rows-per-page') || '200');
+  setText('ba-row-count', rows.length + ' rows');
+  const tb = $('ba-tbody');
+  if (!rows.length) { tb.innerHTML = '<tr><td colspan="12" style="text-align:center;padding:44px;color:var(--g400)">Import the Bus Accident CSV file to view all records</td></tr>'; return; }
+  tb.innerHTML = rows.slice(0, max).map((r,i) => `
+    <tr>
+      <td style="color:var(--g300)">${i+1}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Accident Date']||''}</td>
+      <td class="editable" ondblclick="editCell(this)">${r['Driver Name']||''}</td>
+      <td>${r['Nationality']||''}</td>
+      <td>${r['Depot']||''}</td>
+      <td><span class="badge ${r['Accident Category']==='Minor'?'badge-blue':r['Accident Category']==='Moderate'?'badge-amber':'badge-red'}">${r['Accident Category']||''}</span></td>
+      <td>${r['Bus Type']||''}</td>
+      <td>${(r['Route']||'').substring(0,22)}</td>
+      <td><span class="badge ${r['Is Preventable']==='Yes'?'badge-red':'badge-green'}">${r['Is Preventable']||''}</span></td>
+      <td>${r['Accident Status']||''}</td>
+      <td><span class="badge ${r['Training Status']==='Attend Training'?'badge-green':'badge-amber'}">${(r['Training Status']||'').replace('Not Apply Training','Not Applied')}</span></td>
+      <td><button class="del-btn" onclick="deleteRow(this)">✕</button></td>
+    </tr>`).join('');
+}
+
+function renderPS() {
+  makeChart('ps-c1','doughnut',['Bus Familiarisation','Route Familiarisation','Tourism'],[6137,3168,9]);
+  makeChart('ps-c2','bar',Object.keys(SUMMARY.is_depot),Object.values(SUMMARY.is_depot));
+}
+
+function renderRC() {
+  makeChart('rc-c1','bar',Object.keys(SUMMARY.is_nat),Object.values(SUMMARY.is_nat),{extra:{indexAxis:'y'}});
+  makeChart('rc-c2','bar',Object.keys(SUMMARY.is_depot),Object.values(SUMMARY.is_depot));
+}
+
+/* ── CUSTOM DASHBOARD ─────────────────────────── */
+function buildCustomDash(rows, filename) {
+  $('custom-empty').style.display = 'none';
+  $('custom-content').style.display = 'block';
+  $('cu-export-btn').style.display = '';
+  DB.cu = rows;
+  const headers = Object.keys(rows[0]);
+  setText('cu-row-count', rows.length.toLocaleString() + ' rows');
+  setText('cu-table-title', filename.replace('.csv',''));
+  const catCols = headers.filter(h => { const u = new Set(rows.map(r => r[h]||'')).size; return u > 1 && u < 25; });
+  // KPIs
+  $('cu-kpis').innerHTML = `
+    <div class="kpi" style="--kc:var(--blue)"><div class="kpi-top"><div class="kpi-label">Total Records</div><div class="kpi-icon">📊</div></div><div class="kpi-value">${rows.length.toLocaleString()}</div><div class="kpi-sub">${filename}</div></div>
+    <div class="kpi" style="--kc:var(--green)"><div class="kpi-top"><div class="kpi-label">Columns</div><div class="kpi-icon">📋</div></div><div class="kpi-value">${headers.length}</div><div class="kpi-sub">Fields detected</div></div>
+    ${catCols.slice(0,2).map(h => { const top = Object.entries(countBy(rows,h)).sort((a,b)=>b[1]-a[1])[0]; return `<div class="kpi" style="--kc:var(--amber)"><div class="kpi-top"><div class="kpi-label">${h}</div><div class="kpi-icon">🔢</div></div><div class="kpi-value" style="font-size:16px">${top?top[0].substring(0,12):'—'}</div><div class="kpi-sub">Most common</div></div>`; }).join('')}`;
+  if (catCols[0]) { const d = topN(countBy(rows,catCols[0]),10); $('cu-chart1-title').textContent = catCols[0]; makeChart('cu-c1','bar',Object.keys(d),Object.values(d)); }
+  if (catCols[1]) { const d = topN(countBy(rows,catCols[1]),8);  $('cu-chart2-title').textContent = catCols[1]; makeChart('cu-c2','doughnut',Object.keys(d),Object.values(d)); }
+  // Table
+  $('cu-thead').innerHTML = `<tr><th>#</th>${headers.map(h => `<th>${h}</th>`).join('')}</tr>`;
+  $('cu-tbody').innerHTML = rows.slice(0,200).map((r,i) => `<tr><td style="color:var(--g300)">${i+1}</td>${headers.map(h => `<td class="editable" ondblclick="editCell(this)">${(r[h]||'').toString().substring(0,30)}</td>`).join('')}</tr>`).join('');
+}
+
+/* ── CSV IMPORT ───────────────────────────────── */
+let importTarget = null;
+
+$('file-input').addEventListener('change', function(e) {
+  Array.from(e.target.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const raw = ev.target.result.replace(/[\xff\xfe]/g, '');
+      const rows = parseCSV(raw);
+      if (!rows.length) return;
+      const headers = Object.keys(rows[0]).map(h => h.toLowerCase());
+      const t = importTarget;
+      if (t === 'cu') { buildCustomDash(rows, file.name); openModule('custom'); }
+      else if (t === 'tx' || headers.includes('severity of accident')) {
+        DB.tx = rows;
+        const nats = [...new Set(rows.map(r => r['Nationality of the driver']||'').filter(Boolean))].sort();
+        const sel = $('tx-f-nat');
+        sel.innerHTML = '<option value="">All Nationalities</option>' + nats.map(n => `<option>${n}</option>`).join('');
+        renderTX(); renderTableTX(rows);
+      } else if (t === 'ba' || headers.includes('accident category')) {
+        DB.ba = rows; renderBA(); renderTableBA(rows);
+      } else if (t === 'is' || headers.includes('type of training')) {
+        DB.is = rows; renderIS();
+      } else if (t === 'ps') { DB.ps = rows; }
+      else if (t === 'rc') { DB.rc = rows; renderRC(); }
+      else { buildCustomDash(rows, file.name); openModule('custom'); }
+      importTarget = null;
+      showToast('✓ ' + file.name + ' imported — dashboard updated');
+    };
+    reader.readAsText(file);
+  });
+  this.value = '';
+});
+
+function triggerImport(key) { importTarget = key; $('file-input').click(); }
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const headers = splitLine(lines[0]);
+  return lines.slice(1).map(line => {
+    const vals = splitLine(line);
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = (vals[i] || '').trim(); });
+    return obj;
+  }).filter(r => Object.values(r).some(v => v));
+}
+
+function splitLine(line) {
+  const result = []; let cur = '', inQ = false;
+  for (const ch of line) {
+    if (ch === '"') { inQ = !inQ; }
+    else if (ch === ',' && !inQ) { result.push(cur.trim()); cur = ''; }
+    else { cur += ch; }
+  }
+  result.push(cur.trim());
+  return result.map(s => s.replace(/^"|"$/g, '').trim());
+}
+
+/* ── CSV EXPORT ───────────────────────────────── */
+function exportCSV(key) {
+  const tbodyId = { is:'is-tbody', tx:'tx-tbody', ba:'ba-tbody', ps:'ps-tbody', rc:'rc-tbody', cu:'cu-tbody' }[key];
+  const tbody = $(tbodyId); if (!tbody) return;
+  const tbl = tbody.closest('table');
+  const ths = Array.from(tbl.querySelectorAll('thead th')).map(t => t.textContent.trim());
+  const headers = ths.slice(1, ths[ths.length-1] === '' ? ths.length-1 : ths.length);
+  const rows = Array.from(tbody.querySelectorAll('tr')).map(tr => {
+    const tds = Array.from(tr.querySelectorAll('td'));
+    const data = tds[tds.length-1]?.querySelector('.del-btn') ? tds.slice(1,-1) : tds.slice(1);
+    return data.map(td => '"' + td.textContent.trim() + '"').join(',');
+  });
+  const csv = [headers.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `${key}_export_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('CSV exported successfully');
+}
+
+/* ── TABLE INTERACTIONS ───────────────────────── */
+function editCell(td) {
+  if (SESSION?.username === 'viewer') { showToast('View-only access — editing not permitted'); return; }
+  td.setAttribute('contenteditable', 'true'); td.focus();
+  const sel = window.getSelection(), range = document.createRange();
+  range.selectNodeContents(td); sel.removeAllRanges(); sel.addRange(range);
+  td.onblur = () => { td.removeAttribute('contenteditable'); showToast('Cell saved'); };
+  td.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); td.blur(); } if (e.key === 'Escape') td.blur(); };
+}
+
+function deleteRow(btn) {
+  if (SESSION?.username === 'viewer') { showToast('View-only access — cannot delete'); return; }
+  if (confirm('Delete this row?')) { btn.closest('tr').remove(); showToast('Row deleted'); }
+}
+
+function addRow(key) {
+  if (SESSION?.username === 'viewer') { showToast('View-only access'); return; }
+  const map = { is:'is-tbody', tx:'tx-tbody', ba:'ba-tbody', ps:'ps-tbody', rc:'rc-tbody', cu:'cu-tbody' };
+  const tbody = $(map[key]); if (!tbody) return;
+  const colCount = tbody.closest('table').querySelectorAll('thead th').length;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td style="color:var(--g300)">${tbody.querySelectorAll('tr').length+1}</td>`
+    + Array(colCount - 2).fill(0).map(() => `<td class="editable" ondblclick="editCell(this)" style="color:var(--g400);font-style:italic">click to edit</td>`).join('')
+    + `<td><button class="del-btn" onclick="deleteRow(this)">✕</button></td>`;
+  tbody.appendChild(tr);
+  tbody.closest('.tbl-wrap').scrollTop = 99999;
+  showToast('New row added — double-click any cell to edit');
+}
+
+function searchTable(tbodyId, query) {
+  const tbody = $(tbodyId); if (!tbody) return;
+  const q = query.toLowerCase();
+  tbody.querySelectorAll('tr').forEach(tr => { tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+}
+
+function sortTable(tbodyId, col) {
+  const tbody = $(tbodyId); if (!tbody) return;
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a, b) => (a.cells[col]?.textContent||'').localeCompare(b.cells[col]?.textContent||'', undefined, { numeric: true }));
+  rows.forEach(r => tbody.appendChild(r));
+}
+
+/* ── NAVIGATION ───────────────────────────────── */
+const MODULE_NAMES = { home:'Home', inservice:'In-Service & School Bus', preservice:'Pre-Service', taxi:'Taxi Accident', busacc:'Bus Accident', recruitment:'Recruitment', custom:'Custom View' };
+
+function goHome() {
+  showPage('home');
+  setBreadcrumb([{ label:'Home' }]);
+}
+
+function openModule(key) {
+  showPage(key);
+  setBreadcrumb([{ label:'Home', onclick:'goHome()' }, null, { label: MODULE_NAMES[key] }]);
+  if (key === 'inservice')    renderIS();
+  else if (key === 'taxi')    renderTX();
+  else if (key === 'busacc')  renderBA();
+  else if (key === 'preservice') renderPS();
+  else if (key === 'recruitment') renderRC();
+  window.scrollTo(0, 0);
+}
+
+function showPage(key) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  $('page-' + key).classList.add('active');
+}
+
+function setBreadcrumb(parts) {
+  $('breadcrumb').innerHTML = parts.map(p => {
+    if (!p) return '<span class="bc-sep">›</span>';
+    if (p.onclick) return `<span class="bc-link" onclick="${p.onclick}">${p.label}</span>`;
+    return `<span class="bc-current">${p.label}</span>`;
+  }).join('');
+}
+
+/* ── FILTERS ──────────────────────────────────── */
+function resetFilters(key) {
+  document.querySelectorAll(`[id^="${key}-f-"]`).forEach(s => { s.value = ''; });
+  if (key === 'is') renderIS();
+  else if (key === 'tx') renderTX();
+  else if (key === 'ba') renderBA();
+}
+
+/* ── HELPERS ──────────────────────────────────── */
+function $(id) { return document.getElementById(id); }
+function val(id) { const e = $(id); return e ? e.value : ''; }
+function setText(id, v) { const e = $(id); if (e) e.textContent = v; }
+function countBy(rows, key) { const d = {}; rows.forEach(r => { const k = (r[key]||'').trim(); if (k) d[k] = (d[k]||0)+1; }); return d; }
+function topN(obj, n) { return Object.fromEntries(Object.entries(obj).sort((a,b) => b[1]-a[1]).slice(0,n)); }
+function buildTrend(rows, col) {
+  const mo = {jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+  const d = {};
+  rows.forEach(r => {
+    const s = (r[col]||'').trim(); if (!s) return;
+    const p = s.split('-'); if (p.length !== 3) return;
+    const mn = mo[p[1].toLowerCase()]||'00', yr = p[2].length===2 ? '20'+p[2] : p[2];
+    const k = yr+'-'+mn; d[k] = (d[k]||0)+1;
+  });
+  return Object.fromEntries(Object.entries(d).sort());
+}
+
+function showToast(msg, dur = 3000) {
+  const el = $('toast-el');
+  $('toast-msg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), dur);
+}
+
+function openSettings()  { $('settings-modal').classList.add('open'); }
+function closeSettings() { $('settings-modal').classList.remove('open'); }
+$('settings-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeSettings(); });
+
+
+/* ── USER MANAGEMENT ──────────────────────────── */
+// Users are stored in memory; in production you'd persist to a backend
+let USER_DB = {
+  admin:   { pass:'admin123', role:'Administrator' },
+  manager: { pass:'mgr2025',  role:'Manager'       },
+  viewer:  { pass:'view2025', role:'Viewer'        }
+};
+
+function switchTab(tab) {
+  ['general','users'].forEach(t => {
+    $('tab-'+t).classList.toggle('active', t===tab);
+    $('tab-content-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  if (tab === 'users') renderUserList();
+}
+
+function renderUserList() {
+  const isAdmin = SESSION?.role === 'Administrator';
+  $('um-admin-only').style.display = isAdmin ? 'block' : 'none';
+  $('um-no-access').style.display  = isAdmin ? 'none'  : 'block';
+  if (!isAdmin) return;
+  const roleClass = { 'Administrator':'um-admin', 'Manager':'um-manager', 'Viewer':'um-viewer' };
+  const tbody = $('um-user-list');
+  tbody.innerHTML = Object.entries(USER_DB).map(([uname, u]) => `
+    <tr style="border-bottom:1px solid var(--g100);">
+      <td style="padding:10px 14px;font-weight:600;color:var(--g900);">${uname}</td>
+      <td style="padding:10px 14px;"><span class="um-role-badge ${roleClass[u.role]||''}">${u.role}</span></td>
+      <td style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span id="pw-display-${uname}" style="font-family:monospace;font-size:12px;color:var(--g500);">••••••••</span>
+          <button onclick="togglePwDisplay('${uname}')" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:12px;padding:1px 4px;" title="Show/hide">👁</button>
+        </div>
+      </td>
+      <td style="padding:10px 14px;text-align:right;">
+        <button onclick="openEditUser('${uname}')" style="background:none;border:1.5px solid var(--g200);border-radius:5px;padding:4px 10px;font-size:11.5px;cursor:pointer;color:var(--g600);font-family:'Plus Jakarta Sans',sans-serif;margin-right:4px;transition:all .12s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--g200)';this.style.color='var(--g600)'">Edit</button>
+        ${uname !== SESSION?.username ? `<button onclick="deleteUser('${uname}')" style="background:none;border:1.5px solid var(--g200);border-radius:5px;padding:4px 10px;font-size:11.5px;cursor:pointer;color:var(--red);font-family:'Plus Jakarta Sans',sans-serif;transition:all .12s;" onmouseover="this.style.background='var(--rs)';this.style.borderColor='var(--red)'" onmouseout="this.style.background='none';this.style.borderColor='var(--g200)'">Remove</button>` : '<span style="font-size:11px;color:var(--g400);padding:0 4px">You</span>'}
+      </td>
+    </tr>`).join('');
+}
+
+function togglePwDisplay(uname) {
+  const el = $('pw-display-'+uname);
+  if (!el) return;
+  el.textContent = el.textContent === '••••••••' ? USER_DB[uname].pass : '••••••••';
+}
+
+function addUser() {
+  const uname = $('um-new-user').value.trim().toLowerCase();
+  const pass  = $('um-new-pass').value.trim();
+  const role  = $('um-new-role').value;
+  const errEl = $('um-error');
+  errEl.style.display = 'none';
+  if (!uname || pass.length < 6) { errEl.style.display = 'block'; return; }
+  if (USER_DB[uname]) { errEl.textContent = '⚠ Username already exists'; errEl.style.display = 'block'; return; }
+  USER_DB[uname] = { pass, role };
+  // Sync to USERS for login
+  USERS[uname] = { pass, role, initials: uname.substring(0,2).toUpperCase() };
+  $('um-new-user').value = ''; $('um-new-pass').value = '';
+  renderUserList();
+  showToast('User "' + uname + '" added successfully');
+}
+
+function deleteUser(uname) {
+  if (!confirm('Remove user "' + uname + '"? This cannot be undone.')) return;
+  delete USER_DB[uname];
+  delete USERS[uname];
+  renderUserList();
+  showToast('User "' + uname + '" removed');
+}
+
+let editingUser = null;
+function openEditUser(uname) {
+  editingUser = uname;
+  const u = USER_DB[uname];
+  // Simple inline edit — replace row with form
+  const tbody = $('um-user-list');
+  const rows = tbody.querySelectorAll('tr');
+  const idx = Object.keys(USER_DB).indexOf(uname);
+  if (idx < 0 || !rows[idx]) return;
+  rows[idx].innerHTML = `
+    <td style="padding:8px 14px;" colspan="4">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto auto;gap:8px;align-items:end;">
+        <div><div style="font-size:10px;color:var(--g500);margin-bottom:3px;font-weight:600;">USERNAME</div>
+          <input id="edit-uname" class="form-input" value="${uname}" style="padding:7px 10px;font-size:12px;"/>
+        </div>
+        <div><div style="font-size:10px;color:var(--g500);margin-bottom:3px;font-weight:600;">NEW PASSWORD</div>
+          <input id="edit-pass" class="form-input" type="password" placeholder="Leave blank to keep" style="padding:7px 10px;font-size:12px;"/>
+        </div>
+        <div><div style="font-size:10px;color:var(--g500);margin-bottom:3px;font-weight:600;">ROLE</div>
+          <select id="edit-role" class="filter-select" style="width:100%;padding:7px 10px;">
+            <option ${u.role==='Administrator'?'selected':''}>Administrator</option>
+            <option ${u.role==='Manager'?'selected':''}>Manager</option>
+            <option ${u.role==='Viewer'?'selected':''}>Viewer</option>
+          </select>
+        </div>
+        <button onclick="saveEditUser('${uname}')" class="tb-btn btn-primary" style="height:34px;">Save</button>
+        <button onclick="renderUserList()" class="tb-btn btn-ghost" style="height:34px;">Cancel</button>
+      </div>
+    </td>`;
+}
+
+function saveEditUser(oldName) {
+  const newName = $('edit-uname').value.trim().toLowerCase();
+  const newPass = $('edit-pass').value.trim();
+  const newRole = $('edit-role').value;
+  if (!newName) { showToast('Username cannot be empty'); return; }
+  if (newName !== oldName && USER_DB[newName]) { showToast('Username already taken'); return; }
+  const existingPass = USER_DB[oldName].pass;
+  // Remove old entry
+  delete USER_DB[oldName]; delete USERS[oldName];
+  // Add updated
+  const finalPass = newPass.length >= 6 ? newPass : existingPass;
+  USER_DB[newName] = { pass: finalPass, role: newRole };
+  USERS[newName]   = { pass: finalPass, role: newRole, initials: newName.substring(0,2).toUpperCase() };
+  renderUserList();
+  showToast('User "' + newName + '" updated');
+}
+
+
+/* ── INIT ─────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  $('tb-date').textContent = new Date().toLocaleDateString('en-AE', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
+});
+</script>
+</body>
+</html>
