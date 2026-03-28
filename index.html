@@ -426,7 +426,7 @@ tbody td{padding:10px 13px;color:var(--g700);white-space:nowrap;}
         <label class="form-label" id="l-pass-lbl">Password</label>
         <div class="pw-wrap">
           <input class="form-input" id="inp-pass" type="password" placeholder="Enter your password" autocomplete="current-password"/>
-          <button class="pw-toggle" type="button" id="pw-toggle-btn" onclick="togglePw()"></button>
+          <button class="pw-toggle" type="button" id="pw-toggle-btn" onclick="togglePw()" style="color:var(--g400)">&#128065;</button>
         </div>
         <div class="form-error" id="login-error"></div>
         <div class="form-error" id="lock-error"></div>
@@ -1777,14 +1777,17 @@ function openEntryForm(key) {
   html += '</div>';
   html += '<div class="form-actions">';
   html += '<button class="btn btn-ghost" onclick="closeEntryForm()">Cancel</button>';
-  html += '<button class="btn btn-primary" onclick="submitEntryForm(''+key+'')">Save Record</button>';
+  html += '<button class="btn btn-primary" id="ef-submit-btn">Save Record</button>';
   html += '</div>';
   G('entry-form-body').innerHTML = html;
+  var sb = G('ef-submit-btn');
+  if (sb) sb.onclick = function() { submitEntryForm(key); };
   setIcon('ic-entry-mo2','plus-circle',20);
   G('entry-modal').classList.add('open');
 }
 
-function submitEntryForm(key) {
+function submitEntryForm(btnOrKey) {
+  var key = typeof btnOrKey === 'string' ? btnOrKey : (btnOrKey.dataset ? btnOrKey.dataset.key : btnOrKey);
   var cfg = ENTRY_FORMS[key]; if (!cfg) return;
   var record = {};
   var valid = true;
@@ -2028,13 +2031,14 @@ function renderUserList(){
       '<td style="color:var(--g500);font-size:12px">'+(d.email||'—')+'</td>' +
       '<td><span class="role-pill '+(rc[d.role]||'')+'">'+d.role+'</span></td>' +
       '<td><span id="upw-'+u+'" style="font-family:monospace;font-size:12px">••••••••</span> ' +
-        '<button onclick="tglPw(''+u+'')" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:14px;padding:2px">&#128065;</button></td>' +
+        '<button data-u="'+u+'" onclick="tglPwU(this)" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:14px;padding:2px">&#128065;</button></td>' +
       '<td style="text-align:right">' +
-        '<button class="um-btn um-btn-edit" onclick="editUser(''+u+'')">Edit</button>' +
-        (you?'<span style="font-size:11px;color:var(--g400);padding:0 6px">You</span>':'<button class="um-btn um-btn-del" onclick="removeUser(''+u+'')">Remove</button>')+
+        '<button class="um-btn um-btn-edit" data-u="'+u+'" onclick="editUsr(this)">Edit</button>' +
+        (you?'<span style="font-size:11px;color:var(--g400);padding:0 6px">You</span>':'<button class="um-btn um-btn-del" data-u="'+u+'" onclick="rmUsr(this)">Remove</button>')+
       '</td></tr>';
   }).join('');
 }
+function tglPwU(btn){tglPw(btn.dataset.u);}
 function tglPw(u){var el=G('upw-'+u);if(el)el.textContent=el.textContent.includes('•')?USERS[u].pass:'••••••••';}
 function addUser(){
   var u=V('um-uname').trim().toLowerCase(),p=V('um-pass').trim(),e=V('um-email').trim(),r=V('um-role');
@@ -2049,6 +2053,9 @@ function removeUser(u){
   if(!confirm('Remove user "'+u+'"?'))return;
   delete USERS[u];renderUserList();showToast('User "'+u+'" removed');
 }
+function editUsr(btn){editUser(btn.dataset.u);}
+function rmUsr(btn){removeUser(btn.dataset.u);}
+function svUsr(btn){saveUserEdit(btn.dataset.old);}
 function editUser(u){
   var d=USERS[u];
   var rows=G('um-tbody').querySelectorAll('tr');
@@ -2064,7 +2071,7 @@ function editUser(u){
       '<option'+(d.role==='Manager'?' selected':'')+'>Manager</option>' +
       '<option'+(d.role==='Viewer'?' selected':'')+'>Viewer</option>' +
     '</select></div>' +
-    '<button class="btn btn-primary" style="height:33px" onclick="saveUserEdit(''+u+'')">Save</button>' +
+    '<button class="btn btn-primary" style="height:33px" data-old="'+old+'" onclick="svUsr(this)">Save</button>' +
     '<button class="btn btn-ghost" style="height:33px" onclick="renderUserList()">Cancel</button>' +
     '</div></td>';
 }
