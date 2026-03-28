@@ -1638,7 +1638,7 @@ function addRow(key){
   var tr=document.createElement('tr');
   tr.innerHTML='<td style="color:var(--g300)">'+(tb.querySelectorAll('tr').length+1)+'</td>'
     +Array(cols-2).fill(0).map(function(){return '<td class="editable" ondblclick="editC(this)" style="color:var(--g400);font-style:italic">click to edit</td>';}).join('')
-    +'<td><button class="del-btn" onclick="dR(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button></td>';
+    +'<td><button class="del-btn" onclick="dR(this)">&#x2715;</button></td>';
   tb.appendChild(tr);
   tb.closest('.tbl-wrap').scrollTop=99999;
   showToast('Row added — double-click cells to edit');
@@ -1756,7 +1756,7 @@ function renderUserList(){
       +'<td style="color:var(--g500);font-size:12px">'+(d.email||'—')+'</td>'
       +'<td><span class="um-role-pill '+(roleClass[d.role]||'')+'">'+d.role+'</span></td>'
       +'<td><div class="um-pw-cell"><span class="um-pw-text" id="upw-'+u+'">••••••••</span>'
-      +'<button class="um-pw-eye" onclick="tPwD(''+u+'')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></td>'
+      +'<button class="um-pw-eye" onclick="tPwD(this,\''+u+'\')" style="background:none;border:none;cursor:pointer;color:var(--g400);padding:3px;font-size:12px;">&#128065;</button></div></td>'
       +'<td style="text-align:right">'
       +'<button class="um-btn um-btn-edit" onclick="openEditU(''+u+'')">Edit</button>'
       +(u!==SESSION.username?'<button class="um-btn um-btn-del" onclick="delUser(''+u+'')">Remove</button>':'<span style="font-size:11px;color:var(--g400);padding:0 6px">You</span>')
